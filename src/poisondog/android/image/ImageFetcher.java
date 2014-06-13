@@ -22,14 +22,21 @@ import java.io.IOException;
 import org.apache.commons.vfs2.FileObject;
 import org.apache.commons.vfs2.FileSystemException;
 import org.apache.commons.vfs2.VFS;
-import poisondog.android.mysky.core.CacheDirectory;
+//import poisondog.android.mysky.core.CacheDirectory;
+import poisondog.io.CopyTask;
 /**
  * @author poisondog <poisondog@gmail.com>
  */
 public class ImageFetcher extends ImageResize {
+	private FileObject mDestination;
 
-	public ImageFetcher(Context context, int imageWidth, int imageHeight) {
+	public ImageFetcher(Context context, int imageWidth, int imageHeight, FileObject dest) {
 		super(context, imageWidth, imageHeight);
+		setDestination(dest);
+	}
+
+	public void setDestination(FileObject obj) {
+		mDestination = obj;
 	}
 
 	protected Bitmap processBitmap(Object data){
@@ -40,7 +47,11 @@ public class ImageFetcher extends ImageResize {
 			if(remote.getURL().getProtocol() == "file")
 				return super.processBitmap(remote.getURL().toString());
 
-			FileObject file = CacheDirectory.download(remote);
+//			FileObject file = CacheDirectory.download(remote);
+			FileObject file = mDestination.resolveFile(remote.getName().getBaseName());
+			CopyTask task = new CopyTask(remote.getContent().getInputStream(), file.getContent().getOutputStream());
+			task.transport();
+
 			if(file == null){
 				return null;
 			}

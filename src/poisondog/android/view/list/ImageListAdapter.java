@@ -29,58 +29,62 @@ import java.util.List;
 import org.apache.commons.vfs2.VFS;
 import poisondog.android.image.ImageCache;
 import poisondog.android.image.ImageFetcher;
+import poisondog.android.os.AsyncTask;
 //import poisondog.android.mysky.task.LoadFileInfo;
 import poisondog.android.view.list.R;
+import org.apache.commons.vfs2.FileObject;
 /**
  * @author poisondog <poisondog@gmail.com>
  */
 public class ImageListAdapter extends BaseAdapter {
-
 	private Activity activity;
-	private List<ComplexListItem> aFiles;
+	private List<ComplexListItem> mItems;
 	private ImageFetcher fetcher;
+	private AsyncTask<ComplexListItem, ?, ?> mTask;
 
-	public ImageListAdapter(Activity activity, List<ComplexListItem> files) {
+	public ImageListAdapter(Activity activity, List<ComplexListItem> items, FileObject dest, FileObject cache) {
 		super();
 		this.activity = activity;
-		this.aFiles = files;
+		this.mItems = items;
 
-		File f = activity.getExternalCacheDir();
-		this.fetcher = new ImageFetcher(activity, 100, 100);
-//		this.fetcher.setLoadingImage(R.drawable.file_image);
-		this.fetcher.setImageCache(new ImageCache(activity, VFS.getManager().resolveFile(f.getPath())));
+		this.fetcher = new ImageFetcher(activity, 100, 100, dest);
+		this.fetcher.setImageCache(new ImageCache(activity, cache));
+	}
+
+	public void setMission(AsyncTask<ComplexListItem, ?, ?> task) {
+		mTask = task;
 	}
 
 	public void addItem(ComplexListItem file) {
-		aFiles.add(file);
+		mItems.add(file);
 		notifyDataSetChanged();
 	}
 
-	public void setItems(List<ComplexListItem> files) {
-		aFiles = files;
+	public void setItems(List<ComplexListItem> items) {
+		mItems = items;
 		notifyDataSetChanged();
 	}
 
 	public void setItem(int index, ComplexListItem file) {
-		aFiles.set(index, file);
+		mItems.set(index, file);
 	}
 
 	public void removeItem(int index) {
-		aFiles.remove(index);
+		mItems.remove(index);
 	}
 
 	public List<ComplexListItem> getItems() {
-		return aFiles;
+		return mItems;
 	}
 
 	@Override
 	public int getCount() {
-		return aFiles.size();
+		return mItems.size();
 	}
 
 	@Override
 	public ComplexListItem getItem(int position) {
-		return aFiles.get(position);
+		return mItems.get(position);
 	}
 
 	@Override
@@ -96,6 +100,14 @@ public class ImageListAdapter extends BaseAdapter {
 
 		updateView(row, obj);
 		return row;
+	}
+
+	public TextView getSubtitle(View row) {
+		return (TextView) row.findViewById(R.id.subtitle);
+	}
+
+	public TextView getComment(View row) {
+		return (TextView) row.findViewById(R.id.comment);
 	}
 
 	public void updateView(View row, ComplexListItem obj) {
@@ -115,16 +127,20 @@ public class ImageListAdapter extends BaseAdapter {
 		title.setText(obj.getTitle());
 		subtitle.setText(obj.getSubtitle());
 		comment.setText(obj.getComment());
+
 		image.setImageResource(obj.getDefaultImage());
-		fetcher.loadImage(obj.getImage(), image);
+		if(obj.getImage() != null && !obj.getImage().isEmpty())
+			fetcher.loadImage(obj.getImage(), image);
 
 //		LoadFileInfo task = new LoadFileInfo(subtitle, comment);
 //		task.execute(obj.toString());
+		if(mTask != null)
+			mTask.execute(obj);
 	}
 
 	@Override
 	public boolean isEmpty() {
-		return aFiles.isEmpty();
+		return mItems.isEmpty();
 	}
 
 	public void setPauseWork(boolean flag) {

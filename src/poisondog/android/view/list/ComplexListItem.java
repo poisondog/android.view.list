@@ -25,5 +25,6 @@ public interface ComplexListItem {
 	public String getSubtitle();
 	public String getComment();
 	public String getImage();
+	public Object getData();
 	public int getDefaultImage();
 }
