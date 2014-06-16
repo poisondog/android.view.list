@@ -27,6 +27,7 @@ import android.widget.TextView;
 import java.io.File;
 import java.util.List;
 import org.apache.commons.vfs2.VFS;
+import poisondog.net.URLUtils;
 import poisondog.android.image.ImageCache;
 import poisondog.android.image.ImageFetcher;
 import poisondog.android.os.AsyncTask;
@@ -40,7 +41,6 @@ public class ImageListAdapter extends BaseAdapter {
 	private Activity activity;
 	private List<ComplexListItem> mItems;
 	private ImageFetcher fetcher;
-	private AsyncTask<ComplexListItem, ?, ?> mTask;
 
 	public ImageListAdapter(Activity activity, List<ComplexListItem> items, FileObject dest, FileObject cache) {
 		super();
@@ -49,10 +49,6 @@ public class ImageListAdapter extends BaseAdapter {
 
 		this.fetcher = new ImageFetcher(activity, 100, 100, dest);
 		this.fetcher.setImageCache(new ImageCache(activity, cache));
-	}
-
-	public void setMission(AsyncTask<ComplexListItem, ?, ?> task) {
-		mTask = task;
 	}
 
 	public void addItem(ComplexListItem file) {
@@ -113,7 +109,7 @@ public class ImageListAdapter extends BaseAdapter {
 	public void updateView(View row, ComplexListItem obj) {
 		ImageView image = (ImageView) row.findViewById(R.id.image);
 		ImageView state = (ImageView) row.findViewById(R.id.state);
-		TextView url = (TextView) row.findViewById(R.id.url);
+		TextView hide = (TextView) row.findViewById(R.id.hide);
 		TextView title = (TextView) row.findViewById(R.id.title);
 		TextView subtitle = (TextView) row.findViewById(R.id.subtitle);
 		TextView comment = (TextView) row.findViewById(R.id.comment);
@@ -123,19 +119,20 @@ public class ImageListAdapter extends BaseAdapter {
 		subtitle.setVisibility(View.VISIBLE);
 		comment.setVisibility(View.VISIBLE);
 
-		url.setText(obj.getHideMessage());
+		hide.setText(obj.getHideMessage());
 		title.setText(obj.getTitle());
-		subtitle.setText(obj.getSubtitle());
-		comment.setText(obj.getComment());
+
+		obj.setSubTitle(subtitle);
+		obj.setComment(comment);
+		obj.setImage(image);
+		obj.setState(state);
 
 		image.setImageResource(obj.getDefaultImage());
-		if(obj.getImage() != null && !obj.getImage().isEmpty())
+		if(obj.getImage() != null && !obj.getImage().isEmpty() && URLUtils.guessContentType(obj.getImage()).startsWith("image/"))
 			fetcher.loadImage(obj.getImage(), image);
 
 //		LoadFileInfo task = new LoadFileInfo(subtitle, comment);
 //		task.execute(obj.toString());
-		if(mTask != null)
-			mTask.execute(obj);
 	}
 
 	@Override

@@ -16,15 +16,20 @@
 
 package poisondog.android.view.list;
 
+import android.widget.TextView;
+import android.widget.ImageView;
 /**
  * @author Adam Huang <poisondog@gmail.com>
  */
 public interface ComplexListItem {
 	public String getHideMessage();
 	public String getTitle();
-	public String getSubtitle();
-	public String getComment();
 	public String getImage();
 	public Object getData();
 	public int getDefaultImage();
+
+	public void setSubTitle(TextView view);
+	public void setComment(TextView view);
+	public void setImage(ImageView view);
+	public void setState(ImageView view);
 }
