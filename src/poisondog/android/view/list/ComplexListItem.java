@@ -24,9 +24,7 @@ import android.widget.ImageView;
 public interface ComplexListItem {
 	public String getHideMessage();
 	public String getTitle();
-	public String getImage();
 	public Object getData();
-	public int getDefaultImage();
 
 	public void setData(Object object);
 	public void setSubTitle(TextView view);

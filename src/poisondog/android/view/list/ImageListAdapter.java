@@ -26,29 +26,19 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import java.io.File;
 import java.util.List;
-import org.apache.commons.vfs2.VFS;
-import poisondog.net.URLUtils;
-import poisondog.android.image.ImageCache;
-import poisondog.android.image.ImageFetcher;
-import poisondog.android.os.AsyncTask;
-//import poisondog.android.mysky.task.LoadFileInfo;
-import poisondog.android.view.list.R;
 import org.apache.commons.vfs2.FileObject;
+import poisondog.android.view.list.R;
 /**
  * @author poisondog <poisondog@gmail.com>
  */
 public class ImageListAdapter extends BaseAdapter {
 	private Activity activity;
 	private List<ComplexListItem> mItems;
-	private ImageFetcher fetcher;
 
 	public ImageListAdapter(Activity activity, List<ComplexListItem> items, FileObject dest, FileObject cache) {
 		super();
 		this.activity = activity;
 		this.mItems = items;
-
-		this.fetcher = new ImageFetcher(activity, 100, 100, dest);
-		this.fetcher.setImageCache(new ImageCache(activity, cache));
 	}
 
 	public void addItem(ComplexListItem file) {
@@ -126,21 +116,10 @@ public class ImageListAdapter extends BaseAdapter {
 		obj.setComment(comment);
 		obj.setImage(image);
 		obj.setState(state);
-
-		image.setImageResource(obj.getDefaultImage());
-		if(obj.getImage() != null && !obj.getImage().isEmpty() && URLUtils.guessContentType(obj.getImage()).startsWith("image/"))
-			fetcher.loadImage(obj.getImage(), image);
-
-//		LoadFileInfo task = new LoadFileInfo(subtitle, comment);
-//		task.execute(obj.toString());
 	}
 
 	@Override
 	public boolean isEmpty() {
 		return mItems.isEmpty();
-	}
-
-	public void setPauseWork(boolean flag) {
-		fetcher.setPauseWork(flag);
 	}
 }
