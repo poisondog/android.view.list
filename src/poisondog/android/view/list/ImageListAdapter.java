@@ -26,7 +26,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import java.io.File;
 import java.util.List;
-import org.apache.commons.vfs2.FileObject;
 import poisondog.android.view.list.R;
 /**
  * @author poisondog <poisondog@gmail.com>
@@ -35,7 +34,7 @@ public class ImageListAdapter extends BaseAdapter {
 	private Activity activity;
 	private List<ComplexListItem> mItems;
 
-	public ImageListAdapter(Activity activity, List<ComplexListItem> items, FileObject dest, FileObject cache) {
+	public ImageListAdapter(Activity activity, List<ComplexListItem> items) {
 		super();
 		this.activity = activity;
 		this.mItems = items;
