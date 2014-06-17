@@ -28,6 +28,7 @@ public interface ComplexListItem {
 	public Object getData();
 	public int getDefaultImage();
 
+	public void setData(Object object);
 	public void setSubTitle(TextView view);
 	public void setComment(TextView view);
 	public void setImage(ImageView view);
