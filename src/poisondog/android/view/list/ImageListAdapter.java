@@ -16,7 +16,7 @@
 
 package poisondog.android.view.list;
 
-import android.app.Activity;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,19 +24,18 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import java.io.File;
 import java.util.List;
 import poisondog.android.view.list.R;
 /**
  * @author poisondog <poisondog@gmail.com>
  */
 public class ImageListAdapter extends BaseAdapter {
-	private Activity activity;
+	private Context mContext;
 	private List<ComplexListItem> mItems;
 
-	public ImageListAdapter(Activity activity, List<ComplexListItem> items) {
+	public ImageListAdapter(Context context, List<ComplexListItem> items) {
 		super();
-		this.activity = activity;
+		mContext = context;
 		this.mItems = items;
 	}
 
@@ -79,7 +78,7 @@ public class ImageListAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		LayoutInflater inflater = activity.getLayoutInflater();
+		LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View row = inflater.inflate(R.layout.image_list_item, parent, false);
 		ComplexListItem obj = getItem(position);
 

@@ -22,7 +22,6 @@ import java.io.IOException;
 import org.apache.commons.vfs2.FileObject;
 import org.apache.commons.vfs2.FileSystemException;
 import org.apache.commons.vfs2.VFS;
-//import poisondog.android.mysky.core.CacheDirectory;
 import poisondog.io.CopyTask;
 /**
  * @author poisondog <poisondog@gmail.com>
@@ -47,7 +46,6 @@ public class ImageFetcher extends ImageResize {
 			if(remote.getURL().getProtocol() == "file")
 				return super.processBitmap(remote.getURL().toString());
 
-//			FileObject file = CacheDirectory.download(remote);
 			FileObject file = mDestination.resolveFile(remote.getName().getBaseName());
 			CopyTask task = new CopyTask(remote.getContent().getInputStream(), file.getContent().getOutputStream());
 			task.transport();
