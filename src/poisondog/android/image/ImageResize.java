@@ -18,10 +18,7 @@ package poisondog.android.image;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.util.Log;
-import org.apache.commons.vfs2.FileObject;
-import org.apache.commons.vfs2.FileSystemException;
-import org.apache.commons.vfs2.VFS;
+import poisondog.net.URLUtils;
 /**
  * @author poisondog <poisondog@gmail.com>
  */
@@ -38,14 +35,10 @@ public class ImageResize extends ImageTask {
 	protected Bitmap processBitmap(Object data){
 		if(!(data instanceof String))
 			return null;
-		try{
-			FileObject file = VFS.getManager().resolveFile((String)data);
-			if(file.getURL().getProtocol() != "file")
-				return null;
-			return ImageUtil.resize(file.getURL().getPath(), reqWidth, reqHeight);
-		}catch(FileSystemException e) {
-			Log.e(getClass().getSimpleName(), "processBitmap - " + e);
+		String url = (String)data;
+		if(!URLUtils.scheme(url).equals("file")) {
+			return null;
 		}
-		return null;
+		return ImageUtil.resize(URLUtils.path(url), reqWidth, reqHeight);
 	}
 }

@@ -23,6 +23,7 @@ import org.apache.commons.vfs2.FileObject;
 import org.apache.commons.vfs2.FileSystemException;
 import org.apache.commons.vfs2.VFS;
 import poisondog.io.CopyTask;
+import poisondog.net.URLUtils;
 /**
  * @author poisondog <poisondog@gmail.com>
  */
@@ -41,11 +42,12 @@ public class ImageFetcher extends ImageResize {
 	protected Bitmap processBitmap(Object data){
 		if(!(data instanceof String) )
 			return null;
+		String url = (String)data;
+		if(URLUtils.scheme(url).equals("file")) {
+			return super.processBitmap(url);
+		}
 		try{
 			FileObject remote = VFS.getManager().resolveFile((String)data);
-			if(remote.getURL().getProtocol() == "file")
-				return super.processBitmap(remote.getURL().toString());
-
 			FileObject file = mDestination.resolveFile(remote.getName().getBaseName());
 			CopyTask task = new CopyTask(remote.getContent().getInputStream(), file.getContent().getOutputStream());
 			task.transport();
