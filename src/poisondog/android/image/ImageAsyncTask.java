@@ -21,6 +21,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.widget.ImageView;
 import java.lang.ref.WeakReference;
 import poisondog.android.os.AsyncTask;
+import poisondog.android.view.list.R;
 /**
  * @author poisondog <poisondog@gmail.com>
  */
@@ -66,7 +67,7 @@ public class ImageAsyncTask extends AsyncTask<Object, Void, BitmapDrawable> {
 		}
 
 		if (bitmap != null) {
-				drawable = new RecyclingBitmapDrawable(task.mResources, bitmap);
+			drawable = new RecyclingBitmapDrawable(task.mResources, bitmap);
 			if (task.mImageCache != null) {
 				try{
 					task.mImageCache.addBitmapToCache(dataString, drawable);
@@ -90,8 +91,12 @@ public class ImageAsyncTask extends AsyncTask<Object, Void, BitmapDrawable> {
 		}
 
 		final ImageView imageView = getAttachedImageView();
-		if (value != null && imageView != null) {
+		if (imageView == null)
+			return;
+		if (value != null) {
 			imageView.setImageDrawable(value);
+		} else {
+			imageView.setImageResource(R.drawable.alert);
 		}
 	}
 
