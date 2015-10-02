@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package poisondog.android.view.list;
 
 import android.content.Context;
@@ -36,7 +35,7 @@ public class ImageListAdapter extends BaseAdapter {
 	public ImageListAdapter(Context context, List<ComplexListItem> items) {
 		super();
 		mContext = context;
-		this.mItems = items;
+		mItems = items;
 	}
 
 	public void addItem(ComplexListItem file) {
