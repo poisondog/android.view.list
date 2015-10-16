@@ -79,9 +79,7 @@ public class ImageListAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View row = inflater.inflate(R.layout.image_list_item, parent, false);
-		ComplexListItem obj = getItem(position);
-
-		updateView(row, obj);
+		updateView(row, getItem(position));
 		return row;
 	}
 
