@@ -1,5 +1,5 @@
-//walton mvn server setting
-apply from: 'mvn.gradle'
+project.group = 'poisondog'
+project.version = '1.0.0'
 
 buildscript {
 	repositories {
@@ -16,7 +16,10 @@ apply plugin: 'com.android.library'
 android {
 	compileSdkVersion 22
 	buildToolsVersion "22.0.1"
+
 	lintOptions {
 		abortOnError false
 	}
 }
+
+apply from: 'repositories.gradle'
