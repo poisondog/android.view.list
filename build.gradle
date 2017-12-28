@@ -15,7 +15,7 @@ apply plugin: 'com.android.library'
 
 android {
 	compileSdkVersion 22
-	buildToolsVersion "22.0.1"
+	buildToolsVersion "25.0.2"
 
 	defaultConfig {
 		minSdkVersion 14
@@ -26,6 +26,10 @@ android {
 	lintOptions {
 		abortOnError false
 	}
+}
+
+dependencies {
+	compile project(':poisondog.core')
 }
 
 apply from: 'repositories.gradle'

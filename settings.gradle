@@ -17,3 +17,6 @@ include 'api'
 include 'services:webservice'
 */
 
+
+include ':poisondog.core'
+project(':poisondog.core').projectDir = new File('../poisondog.core/')

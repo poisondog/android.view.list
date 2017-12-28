@@ -24,11 +24,26 @@ import android.widget.ImageView;
 public interface ComplexListItem {
 	public String getHideMessage();
 	public String getTitle();
+	public String getSubtitle();
+	public String getComment();
 	public Object getData();
 
 	public void setData(Object object);
+
+	/**
+	 * for async task use, so design it
+	 */
 	public void setSubTitle(TextView view);
+	/**
+	 * for async task use, so design it
+	 */
 	public void setComment(TextView view);
+	/**
+	 * for async task use, so design it
+	 */
 	public void setImage(ImageView view);
+	/**
+	 * for async task use, so design it
+	 */
 	public void setState(ImageView view);
 }

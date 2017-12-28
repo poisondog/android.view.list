@@ -25,12 +25,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import java.util.List;
 import poisondog.android.view.list.R;
+
 /**
  * @author poisondog <poisondog@gmail.com>
  */
 public class ImageListAdapter extends BaseAdapter {
 	private Context mContext;
 	private List<ComplexListItem> mItems;
+	private UpdateHandler mSubtitleHandler;
 
 	public ImageListAdapter(Context context, List<ComplexListItem> items) {
 		super();
@@ -77,8 +79,9 @@ public class ImageListAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View row = inflater.inflate(R.layout.image_list_item, parent, false);
+//		LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//		View row = inflater.inflate(R.layout.image_list_item, parent, false);
+		ListItemView row = new ListItemView(mContext);
 		updateView(row, getItem(position));
 		return row;
 	}
@@ -91,7 +94,7 @@ public class ImageListAdapter extends BaseAdapter {
 		return (TextView) row.findViewById(R.id.comment);
 	}
 
-	public void updateView(View row, ComplexListItem obj) {
+	public void updateView(ListItemView row, ComplexListItem obj) {
 		ImageView image = (ImageView) row.findViewById(R.id.image);
 		ImageView state = (ImageView) row.findViewById(R.id.state);
 		TextView hide = (TextView) row.findViewById(R.id.hide);
@@ -100,21 +103,25 @@ public class ImageListAdapter extends BaseAdapter {
 		TextView comment = (TextView) row.findViewById(R.id.comment);
 		ProgressBar progress = (ProgressBar) row.findViewById(R.id.progress);
 
-		progress.setVisibility(View.GONE);
-		subtitle.setVisibility(View.VISIBLE);
-		comment.setVisibility(View.VISIBLE);
+		row.getProgress().setVisibility(View.GONE);
+		row.getSubtitle().setVisibility(View.VISIBLE);
+		row.getComment().setVisibility(View.VISIBLE);
 
-		hide.setText(obj.getHideMessage());
-		title.setText(obj.getTitle());
+		row.getHide().setText(obj.getHideMessage());
+		row.getTitle().setText(obj.getTitle());
 
-		obj.setSubTitle(subtitle);
-		obj.setComment(comment);
-		obj.setImage(image);
-		obj.setState(state);
+		obj.setSubTitle(row.getSubtitle());
+		obj.setComment(row.getComment());
+		obj.setImage(row.getImage());
+		obj.setState(row.getState());
 	}
 
 	@Override
 	public boolean isEmpty() {
 		return mItems.isEmpty();
+	}
+
+	public void setSubtitleHandler(UpdateHandler handler) {
+		mSubtitleHandler = handler;
 	}
 }
