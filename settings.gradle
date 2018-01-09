@@ -17,6 +17,11 @@ include 'api'
 include 'services:webservice'
 */
 
+include ':android.os'
+project(':android.os').projectDir = new File('../android.os/')
+
+include ':poisondog.commons'
+project(':poisondog.commons').projectDir = new File('../poisondog.commons/')
 
 include ':poisondog.core'
 project(':poisondog.core').projectDir = new File('../poisondog.core/')

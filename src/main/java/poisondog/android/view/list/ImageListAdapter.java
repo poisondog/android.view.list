@@ -25,6 +25,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import java.util.List;
 import poisondog.android.view.list.R;
+import poisondog.android.os.AsyncTask;
 
 /**
  * @author poisondog <poisondog@gmail.com>
@@ -94,7 +95,7 @@ public class ImageListAdapter extends BaseAdapter {
 		return (TextView) row.findViewById(R.id.comment);
 	}
 
-	public void updateView(ListItemView row, ComplexListItem obj) {
+	public void updateView(final ListItemView row, final ComplexListItem obj) {
 		ImageView image = (ImageView) row.findViewById(R.id.image);
 		ImageView state = (ImageView) row.findViewById(R.id.state);
 		TextView hide = (TextView) row.findViewById(R.id.hide);
@@ -114,6 +115,32 @@ public class ImageListAdapter extends BaseAdapter {
 		obj.setComment(row.getComment());
 		obj.setImage(row.getImage());
 		obj.setState(row.getState());
+
+		// TODO when android.image ready then to complete it
+//		AsyncTask<String, Void, String> updateSubtitle = new AsyncTask<String, Void, String>() {
+//			@Override
+//			protected String doInBackground(String... none) {
+//				return obj.getSubtitle();
+//			}
+//			@Override
+//			protected void onPostExecute(String result) {
+//				row.getSubtitle().setText(result);
+//			}
+//		};
+//		updateSubtitle.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
+
+//		AsyncTask<String, Void, String> updateComment = new AsyncTask<String, Void, String>() {
+//			@Override
+//			protected String doInBackground(String... none) {
+//				return obj.getComment();
+//			}
+//			@Override
+//			protected void onPostExecute(String result) {
+//				row.getComment().setText(result);
+//			}
+//		};
+//		updateComment.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
+
 	}
 
 	@Override
