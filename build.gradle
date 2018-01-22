@@ -1,6 +1,3 @@
-project.group = 'poisondog'
-project.version = '0.0.1'
-
 buildscript {
 	repositories {
 		jcenter()
@@ -12,6 +9,16 @@ buildscript {
 }
 
 apply plugin: 'com.android.library'
+
+repositories {
+	jcenter()
+	maven {
+		url "https://dl.bintray.com/poisondog/poisondog/"
+	}
+}
+
+project.group = 'poisondog'
+project.version = '0.0.1'
 
 android {
 	compileSdkVersion 24
@@ -31,7 +38,6 @@ android {
 dependencies {
 	compile 'com.android.support:appcompat-v7:25.0.+'
 	compile project(':android.os')
-	compile project(':poisondog.core')
+	compile project(':android.image')
+	compile 'poisondog:poisondog.core:1.0.5'
 }
-
-apply from: 'repositories.gradle'

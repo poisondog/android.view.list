@@ -23,35 +23,44 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import java.util.ArrayList;
 import java.util.List;
-import poisondog.android.view.list.R;
 import poisondog.android.os.AsyncTask;
+import poisondog.android.view.list.R;
 
 /**
  * @author poisondog <poisondog@gmail.com>
  */
 public class ImageListAdapter extends BaseAdapter {
 	private Context mContext;
-	private List<ComplexListItem> mItems;
+	private List<ListItem> mItems;
 	private UpdateHandler mSubtitleHandler;
 
-	public ImageListAdapter(Context context, List<ComplexListItem> items) {
+	/**
+	 * Constructor
+	 */
+	public ImageListAdapter(Context context) {
 		super();
 		mContext = context;
+		mItems = new ArrayList<ListItem>();
+	}
+
+	public ImageListAdapter(Context context, List<ListItem> items) {
+		this(context);
 		mItems = items;
 	}
 
-	public void addItem(ComplexListItem file) {
+	public void addItem(ListItem file) {
 		mItems.add(file);
 		notifyDataSetChanged();
 	}
 
-	public void setItems(List<ComplexListItem> items) {
+	public void setItems(List<ListItem> items) {
 		mItems = items;
 		notifyDataSetChanged();
 	}
 
-	public void setItem(int index, ComplexListItem file) {
+	public void setItem(int index, ListItem file) {
 		mItems.set(index, file);
 	}
 
@@ -59,7 +68,7 @@ public class ImageListAdapter extends BaseAdapter {
 		mItems.remove(index);
 	}
 
-	public List<ComplexListItem> getItems() {
+	public List<ListItem> getItems() {
 		return mItems;
 	}
 
@@ -69,7 +78,7 @@ public class ImageListAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public ComplexListItem getItem(int position) {
+	public ListItem getItem(int position) {
 		return mItems.get(position);
 	}
 
@@ -83,7 +92,8 @@ public class ImageListAdapter extends BaseAdapter {
 //		LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 //		View row = inflater.inflate(R.layout.image_list_item, parent, false);
 		ListItemView row = new ListItemView(mContext);
-		updateView(row, getItem(position));
+//		updateView(row, getItem(position));
+		update(row, getItem(position));
 		return row;
 	}
 
@@ -95,52 +105,68 @@ public class ImageListAdapter extends BaseAdapter {
 		return (TextView) row.findViewById(R.id.comment);
 	}
 
-	public void updateView(final ListItemView row, final ComplexListItem obj) {
-		ImageView image = (ImageView) row.findViewById(R.id.image);
-		ImageView state = (ImageView) row.findViewById(R.id.state);
-		TextView hide = (TextView) row.findViewById(R.id.hide);
-		TextView title = (TextView) row.findViewById(R.id.title);
-		TextView subtitle = (TextView) row.findViewById(R.id.subtitle);
-		TextView comment = (TextView) row.findViewById(R.id.comment);
-		ProgressBar progress = (ProgressBar) row.findViewById(R.id.progress);
+//	public void updateView(final ListItemView row, final ComplexListItem obj) {
+////		ImageView image = (ImageView) row.findViewById(R.id.image);
+////		ImageView state = (ImageView) row.findViewById(R.id.state);
+////		TextView hide = (TextView) row.findViewById(R.id.hide);
+////		TextView title = (TextView) row.findViewById(R.id.title);
+////		TextView subtitle = (TextView) row.findViewById(R.id.subtitle);
+////		TextView comment = (TextView) row.findViewById(R.id.comment);
+////		ProgressBar progress = (ProgressBar) row.findViewById(R.id.progress);
+//
+//		row.getProgress().setVisibility(View.GONE);
+//		row.getSubtitle().setVisibility(View.VISIBLE);
+//		row.getComment().setVisibility(View.VISIBLE);
+//
+//		row.getHide().setText(obj.getHideMessage());
+//		row.getTitle().setText(obj.getTitle());
+//
+//		obj.setSubTitle(row.getSubtitle());
+//		obj.setComment(row.getComment());
+//		obj.setImage(row.getImage());
+//		obj.setState(row.getState());
+//	}
 
-		row.getProgress().setVisibility(View.GONE);
-		row.getSubtitle().setVisibility(View.VISIBLE);
-		row.getComment().setVisibility(View.VISIBLE);
+	private void update(final ListItemView row, final ListItem obj) {
+		AsyncTask<String, Void, String> updateTitle = new AsyncTask<String, Void, String>() {
+			@Override
+			protected String doInBackground(String... none) {
+				return obj.getTitle();
+			}
+			@Override
+			protected void onPostExecute(String result) {
+				row.getTitle().setText(result);
+			}
+		};
+		updateTitle.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
 
-		row.getHide().setText(obj.getHideMessage());
-		row.getTitle().setText(obj.getTitle());
+		AsyncTask<String, Void, String> updateSubtitle = new AsyncTask<String, Void, String>() {
+			@Override
+			protected String doInBackground(String... none) {
+				return obj.getSubtitle();
+			}
+			@Override
+			protected void onPostExecute(String result) {
+				if (result == null)
+					row.getSubtitle().setVisibility(View.GONE);
+				row.getSubtitle().setText(result);
+			}
+		};
+		updateSubtitle.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
 
-		obj.setSubTitle(row.getSubtitle());
-		obj.setComment(row.getComment());
-		obj.setImage(row.getImage());
-		obj.setState(row.getState());
-
-		// TODO when android.image ready then to complete it
-//		AsyncTask<String, Void, String> updateSubtitle = new AsyncTask<String, Void, String>() {
-//			@Override
-//			protected String doInBackground(String... none) {
-//				return obj.getSubtitle();
-//			}
-//			@Override
-//			protected void onPostExecute(String result) {
-//				row.getSubtitle().setText(result);
-//			}
-//		};
-//		updateSubtitle.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
-
-//		AsyncTask<String, Void, String> updateComment = new AsyncTask<String, Void, String>() {
-//			@Override
-//			protected String doInBackground(String... none) {
-//				return obj.getComment();
-//			}
-//			@Override
-//			protected void onPostExecute(String result) {
-//				row.getComment().setText(result);
-//			}
-//		};
-//		updateComment.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
-
+		AsyncTask<String, Void, String> updateComment = new AsyncTask<String, Void, String>() {
+			@Override
+			protected String doInBackground(String... none) {
+				return obj.getComment();
+			}
+			@Override
+			protected void onPostExecute(String result) {
+				if (result == null)
+					row.getComment().setVisibility(View.GONE);
+				row.getComment().setText(result);
+			}
+		};
+		updateComment.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
 	}
 
 	@Override
