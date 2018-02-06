@@ -17,8 +17,8 @@ include 'api'
 include 'services:webservice'
 */
 
-include ':android.os'
-project(':android.os').projectDir = new File('../android.os/')
+include ':android.util'
+project(':android.util').projectDir = new File('../android.util/')
 
 include ':android.image'
 project(':android.image').projectDir = new File('../android.image/')
