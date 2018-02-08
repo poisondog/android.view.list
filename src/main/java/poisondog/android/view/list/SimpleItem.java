@@ -25,6 +25,7 @@ public class SimpleItem implements ListItem {
 	private String mComment;
 	private String mImage;
 	private String mState;
+	private Object mData;
 
 	/**
 	 * Constructor
@@ -61,7 +62,10 @@ public class SimpleItem implements ListItem {
 		return mTitle;
 	}
 	public void setData(Object object) {
-		mTitle = object.toString();
+		mData = object;
+	}
+	public void setTitle(String title) {
+		mTitle = title;
 	}
 	public void setImage(String url) {
 		mImage = url;
