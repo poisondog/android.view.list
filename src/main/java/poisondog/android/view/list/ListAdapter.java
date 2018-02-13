@@ -151,10 +151,16 @@ public class ListAdapter extends BaseAdapter {
 		};
 		updateComment.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
 
-		if (obj.getImage() == null)
+		if (obj.getImage() == null && obj.getDefaultImage() <= 0) {
 			row.getImage().setVisibility(View.GONE);
-		else
+		}
+		if (obj.getDefaultImage() > 0) {
+			mFetcher.setLoadingImage(obj.getDefaultImage());
+			row.getImage().setImageResource(obj.getDefaultImage());
+		}
+		if (obj.getImage() != null) {
 			mFetcher.loadImage(obj.getImage(), row.getImage());
+		}
 
 		if (obj.getState() == null)
 			row.getState().setVisibility(View.GONE);

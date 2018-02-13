@@ -15,6 +15,8 @@
  */
 package poisondog.android.view.list;
 
+import poisondog.android.view.list.R;
+
 /**
  * @author Adam Huang
  * @since 2018-01-22
@@ -25,6 +27,7 @@ public class SimpleItem implements ListItem {
 	private String mComment;
 	private String mImage;
 	private String mState;
+	private int mResource;
 	private Object mData;
 
 	/**
@@ -55,11 +58,14 @@ public class SimpleItem implements ListItem {
 	public String getImage() {
 		return mImage;
 	}
+	public int getDefaultImage() {
+		return mResource;
+	}
 	public String getState() {
 		return mState;
 	}
 	public Object getData() {
-		return mTitle;
+		return mData;
 	}
 	public void setData(Object object) {
 		mData = object;
@@ -67,8 +73,17 @@ public class SimpleItem implements ListItem {
 	public void setTitle(String title) {
 		mTitle = title;
 	}
+	public void setSubtitle(String subtitle) {
+		mSubtitle = subtitle;
+	}
+	public void setComment(String comment) {
+		mComment = comment;
+	}
 	public void setImage(String url) {
 		mImage = url;
+	}
+	public void setDefaultImage(int resource) {
+		mResource = resource;
 	}
 	public void setState(String url) {
 		mState = url;

@@ -26,5 +26,6 @@ public interface ListItem {
 	public String getImage();
 	public String getState();
 	public Object getData();
+	public int getDefaultImage();
 	public void setData(Object object);
 }
