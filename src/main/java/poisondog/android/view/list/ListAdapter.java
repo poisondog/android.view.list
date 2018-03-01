@@ -58,6 +58,10 @@ public class ListAdapter extends BaseAdapter {
 		mItems = items;
 	}
 
+	public void clear() {
+		mItems.clear();
+	}
+
 	public void addItem(ListItem file) {
 		mItems.add(file);
 		notifyDataSetChanged();
