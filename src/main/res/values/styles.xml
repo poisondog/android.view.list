@@ -6,17 +6,17 @@
 	</style>
 	<style name="ListViewTitleStyle">
 		<item name="android:textSize">20sp</item>
-		<item name="android:textColor">@color/titleColor</item>
+		<item name="android:textColor">@color/white</item>
 		<item name="android:textStyle">bold</item>
 		<item name="android:paddingRight">5dp</item>
 	</style>
 	<style name="ListViewSubtitleStyle">
 		<item name="android:textSize">15sp</item>
-		<item name="android:textColor">@color/subtitleColor</item>
+		<item name="android:textColor">@color/silvergray</item>
 	</style>
 	<style name="ListViewCommentStyle">
 		<item name="android:textSize">15sp</item>
-		<item name="android:textColor">@color/commentColor</item>
+		<item name="android:textColor">@color/littlegreen</item>
 		<item name="android:paddingRight">5dp</item>
 	</style>
 </resources>

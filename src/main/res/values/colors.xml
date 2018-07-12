@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<color name="titleColor">#FFFFFF</color>
-	<color name="subtitleColor">#ADADAD</color>
-	<color name="commentColor">#00A86D</color>
+	<color name="white">#ffffff</color>
+	<color name="black">#000000</color>
+	<color name="silvergray">#ADADAD</color>
+	<color name="littlegreen">#00A86D</color>
 </resources>
