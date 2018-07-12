@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<attr name="ListViewTitleStyle" format="reference"/>
+	<attr name="ListViewSubtitleStyle" format="reference"/>
+	<attr name="ListViewCommentStyle" format="reference"/>
+</resources>

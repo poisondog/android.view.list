@@ -37,11 +37,10 @@
 		</TextView>
 		<TextView
 			android:id="@+id/title"
-			style="@style/titleStyle"
+			style="?attr/ListViewTitleStyle"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_toRightOf="@id/image"
-			android:paddingRight="5dp"
 			>
 		</TextView>
 		<FrameLayout
@@ -61,7 +60,7 @@
 				/>
 			<TextView
 				android:id="@+id/subtitle"
-				style="@style/subtitleStyle"
+				style="?attr/ListViewSubtitleStyle"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				>
@@ -69,13 +68,12 @@
 		</FrameLayout>
 		<TextView
 			android:id="@+id/comment"
-			style="@style/commentStyle"
+			style="?attr/ListViewCommentStyle"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_below="@id/title"
 			android:layout_toRightOf="@id/subtitle"
 			android:layout_alignParentRight="true"
-			android:paddingRight="5dp"
 			>
 		</TextView>
 	</RelativeLayout>
