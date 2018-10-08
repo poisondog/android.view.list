@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.ProgressBar;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
+import android.util.AttributeSet;
 
 /**
  * @author Adam Huang
@@ -43,9 +44,20 @@ public class ListItemView extends LinearLayout {
 	 */
 	public ListItemView(Context context) {
 		super(context);
+		init(context);
+	}
+
+	/**
+	 * Constructor
+	 */
+	public ListItemView(Context context, AttributeSet attribute) {
+		super(context, attribute);
+		init(context);
+	}
+
+	private void init(Context context) {
 		LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		mRoot = inflater.inflate(R.layout.image_list_item, null, false);
-
 		mImage = (ImageView) mRoot.findViewById(R.id.image);
 		mState = (ImageView) mRoot.findViewById(R.id.state);
 		mHide = (TextView) mRoot.findViewById(R.id.hide);
@@ -53,7 +65,6 @@ public class ListItemView extends LinearLayout {
 		mSubtitle = (TextView) mRoot.findViewById(R.id.subtitle);
 		mComment = (TextView) mRoot.findViewById(R.id.comment);
 		mProgress = (ProgressBar) mRoot.findViewById(R.id.progress);
-
 		addView(mRoot);
 	}
 

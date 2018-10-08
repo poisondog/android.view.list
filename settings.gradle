@@ -17,14 +17,5 @@ include 'api'
 include 'services:webservice'
 */
 
-include ':android.util'
-project(':android.util').projectDir = new File('../android.util/')
-
 include ':android.image'
 project(':android.image').projectDir = new File('../android.image/')
-
-include ':poisondog.commons'
-project(':poisondog.commons').projectDir = new File('../poisondog.commons/')
-
-include ':poisondog.core'
-project(':poisondog.core').projectDir = new File('../poisondog.core/')
