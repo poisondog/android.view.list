@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<color name="titleColor">#000000</color>
+	<color name="subtitleColor">#ADADAD</color>
+	<color name="commentColor">#00A86D</color>
+</resources>
