@@ -5,10 +5,14 @@ buildscript {
 
 	dependencies {
 		classpath 'com.android.tools.build:gradle:2.2.1'
+		classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
+		classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
 	}
 }
 
 apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: "com.jfrog.bintray"
 
 repositories {
 	jcenter()
@@ -38,3 +42,5 @@ android {
 dependencies {
 	compile project(':android.image')
 }
+
+apply from: 'bintray.gradle'
