@@ -40,7 +40,9 @@ android {
 }
 
 dependencies {
-	compile project(':android.image')
+	compile 'poisondog:poisondog.android.image:1.0.3@aar'
+	compile 'poisondog:poisondog.commons:3.6.5'
+	compile 'poisondog:poisondog.android.util:0.0.1@aar'
 }
 
 apply from: 'bintray.gradle'
