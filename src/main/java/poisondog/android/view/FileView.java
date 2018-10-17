@@ -23,6 +23,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import poisondog.android.view.list.SimpleItem;
+import poisondog.android.view.list.R;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -183,6 +184,10 @@ public class FileView extends RelativeLayout {
 			SimpleItem item = new SimpleItem(filename);
 			item.setSubtitle(time);
 			item.setData(f);
+			try {
+				item.setDefaultImage(f.getUrl().endsWith("/") ? R.drawable.folder : R.drawable.file);
+			} catch(Exception e) {
+			}
 			return item;
 		}
 	}
