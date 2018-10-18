@@ -18,6 +18,3 @@ include 'api'
 
 include ':library'
 project(':library').projectDir = file('../')
-
-include ':android.image'
-project(':android.image').projectDir = new File('../../android.image/')

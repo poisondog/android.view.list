@@ -41,4 +41,4 @@ configurations {
 	compile.exclude module: 'xml-apis'
 }
 
-apply from: 'signing.gradle'
+//apply from: 'signing.gradle'
