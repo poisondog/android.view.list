@@ -79,11 +79,14 @@ public class FolderView extends FileView {
 		return path.execute(getFolder().getUrl()).equals(path.execute(mRoot.getUrl()));
 	}
 
-	class DefaultRefresh implements Mission<IFolder> {
+	class DefaultRefresh implements Runnable {
 		@Override
-		public Void execute(IFolder folder) throws Exception {
-			setData(folder.getChildren());
-			return null;
+		public void run() {
+			try {
+				setData(mCurrent.getChildren());
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

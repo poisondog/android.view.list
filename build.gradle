@@ -20,7 +20,7 @@ repositories {
 }
 
 project.group = 'poisondog'
-project.version = '0.0.9'
+project.version = '0.0.10'
 
 android {
 	compileSdkVersion 24
@@ -41,7 +41,7 @@ dependencies {
 	compile 'com.android.support:design:24.2.0'
 	compile 'poisondog:poisondog.android.image:1.0.3@aar'
 	compile 'poisondog:poisondog.commons:3.6.5'
-	compile 'poisondog:poisondog.android.util:0.0.9@aar'
+	compile 'poisondog:poisondog.android.util:0.0.10@aar'
 }
 
 apply from: 'bintray.gradle'
