@@ -94,7 +94,7 @@ public class FileView extends RelativeLayout {
 	public void setLoading(boolean flag) {
 		if (flag) {
 			mAdapter.clear();
-			mListView.setAdapter(mAdapter);
+//			mListView.setAdapter(mAdapter);
 		}
 		mLoading.setLoading(flag);
 	}
