@@ -31,14 +31,13 @@ import poisondog.vfs.IFolder;
 public class FolderView extends FileView {
 	private IFolder mRoot;
 	private IFolder mCurrent;
-	private Mission<IFolder> mRefreshHandler;
 
 	/**
 	 * Constructor
 	 */
 	public FolderView(Context context) {
 		super(context);
-		mRefreshHandler = new DefaultRefresh();
+		setRefreshHandler(new DefaultRefresh());
 	}
 
 	/**
@@ -46,7 +45,7 @@ public class FolderView extends FileView {
 	 */
 	public FolderView(Context context, AttributeSet attribute) {
 		super(context, attribute);
-		mRefreshHandler = new DefaultRefresh();
+		setRefreshHandler(new DefaultRefresh());
 	}
 
 	public void setRoot(IFolder folder) {
@@ -57,11 +56,6 @@ public class FolderView extends FileView {
 		if (mRoot == null)
 			mRoot = folder;
 		mCurrent = folder;
-		mRefreshHandler.execute(mCurrent);
-	}
-
-	public void setRefreshHandler(Mission<IFolder> handler) {
-		mRefreshHandler = handler;
 	}
 
 	public IFolder getFolder() {

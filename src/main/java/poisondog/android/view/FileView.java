@@ -22,23 +22,24 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import poisondog.android.view.list.SimpleItem;
-import poisondog.android.view.list.R;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import poisondog.android.mission.ScrollTopRefresh;
 import poisondog.android.os.AsyncMissionTask;
+import poisondog.android.os.AsyncTask;
 import poisondog.android.view.list.ListAdapter;
 import poisondog.android.view.list.ListItem;
+import poisondog.android.view.list.R;
+import poisondog.android.view.list.SimpleItem;
 import poisondog.android.view.LoadingView;
 import poisondog.android.view.RefreshList;
 import poisondog.core.Mission;
+import poisondog.net.URLUtils;
 import poisondog.util.Pair;
+import poisondog.util.TimeUtils;
 import poisondog.vfs.comparator.NameOrder;
 import poisondog.vfs.IFile;
-import poisondog.net.URLUtils;
-import poisondog.util.TimeUtils;
 
 /**
  * @author Adam Huang
@@ -47,6 +48,7 @@ import poisondog.util.TimeUtils;
 public class FileView extends RelativeLayout {
 	private ListView mListView;
 	private RefreshList mRefresh;
+	private Runnable mRefreshHandler;
 	private ListAdapter mAdapter;
 	private LoadingView mLoading;
 	private Mission<IFile> mItemCreator;
@@ -84,6 +86,7 @@ public class FileView extends RelativeLayout {
 	}
 
 	public void setRefreshHandler(Runnable handler) {
+		mRefreshHandler = handler;
 		mRefresh.setHandler(handler);
 	}
 
@@ -105,6 +108,26 @@ public class FileView extends RelativeLayout {
 
 	public void remove(int index) {
 		mAdapter.removeItem(index);
+	}
+
+	public void refresh() {
+		setLoading(true);
+		Mission<String> loader = new Mission<String>() {
+			@Override
+			public String execute(String none) {
+				mRefreshHandler.run();
+				return none;
+			}
+		};
+		Mission<String> handler = new Mission<String>() {
+			@Override
+			public Void execute(String none) {
+				setLoading(false);
+				return null;
+			}
+		};
+		AsyncMissionTask<String, Void, String> task = new AsyncMissionTask<>(loader, handler);
+		task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
 	}
 
 	public void update() {
