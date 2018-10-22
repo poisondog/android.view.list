@@ -81,6 +81,12 @@ public class FileView extends RelativeLayout {
 		mListView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 		mListView.setOnScrollListener(new ScrollTopRefresh(mRefresh));
 		mRefresh.addView(mListView);
+		mRefresh.setHandler(new Runnable() {
+			@Override
+			public void run() {
+				refresh();
+			}
+		});
 
 		mLoading.setView(mRefresh);
 		addView(mLoading);
