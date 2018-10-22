@@ -17,6 +17,8 @@ package poisondog.android.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import poisondog.core.Mission;
+import poisondog.core.NoMission;
 import poisondog.net.URLUtils;
 import poisondog.string.GetPath;
 import poisondog.vfs.FileFactory;
@@ -29,12 +31,14 @@ import poisondog.vfs.IFolder;
 public class FolderView extends FileView {
 	private IFolder mRoot;
 	private IFolder mCurrent;
+	private Mission<IFolder> mRefreshHandler;
 
 	/**
 	 * Constructor
 	 */
 	public FolderView(Context context) {
 		super(context);
+		mRefreshHandler = new DefaultRefresh();
 	}
 
 	/**
@@ -42,6 +46,7 @@ public class FolderView extends FileView {
 	 */
 	public FolderView(Context context, AttributeSet attribute) {
 		super(context, attribute);
+		mRefreshHandler = new DefaultRefresh();
 	}
 
 	public void setRoot(IFolder folder) {
@@ -52,7 +57,11 @@ public class FolderView extends FileView {
 		if (mRoot == null)
 			mRoot = folder;
 		mCurrent = folder;
-		setData(mCurrent.getChildren());
+		mRefreshHandler.execute(mCurrent);
+	}
+
+	public void setRefreshHandler(Mission<IFolder> handler) {
+		mRefreshHandler = handler;
 	}
 
 	public IFolder getFolder() {
@@ -74,6 +83,14 @@ public class FolderView extends FileView {
 			return false;
 		GetPath path = new GetPath();
 		return path.execute(getFolder().getUrl()).equals(path.execute(mRoot.getUrl()));
+	}
+
+	class DefaultRefresh implements Mission<IFolder> {
+		@Override
+		public Void execute(IFolder folder) throws Exception {
+			setData(folder.getChildren());
+			return null;
+		}
 	}
 
 }

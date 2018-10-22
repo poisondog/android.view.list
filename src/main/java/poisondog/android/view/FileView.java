@@ -83,7 +83,7 @@ public class FileView extends RelativeLayout {
 		setLoading(false);
 	}
 
-	public void setRefreshHandler(Mission<RefreshList> handler) {
+	public void setRefreshHandler(Runnable handler) {
 		mRefresh.setHandler(handler);
 	}
 
