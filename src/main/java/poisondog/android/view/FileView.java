@@ -48,10 +48,10 @@ import poisondog.vfs.IFile;
 public class FileView extends RelativeLayout {
 	private ListView mListView;
 	protected RefreshList mRefresh;
-	private Runnable mRefreshHandler;
 	private ListAdapter mAdapter;
 	private LoadingView mLoading;
 	private Mission<IFile> mItemCreator;
+	private List<IFile> mContent;
 
 	/**
 	 * Constructor
@@ -74,8 +74,10 @@ public class FileView extends RelativeLayout {
 		mAdapter = new ListAdapter(context);
 		mRefresh = new RefreshList(context);
 		mLoading = new LoadingView(context);
+		mContent = new ArrayList<IFile>();
 
 		mListView = new ListView(context);
+		mListView.setAdapter(mAdapter);
 		mListView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 		mListView.setOnScrollListener(new ScrollTopRefresh(mRefresh));
 		mRefresh.addView(mListView);
@@ -86,7 +88,7 @@ public class FileView extends RelativeLayout {
 	}
 
 	public void setRefreshHandler(Runnable handler) {
-		mRefreshHandler = handler;
+//		mRefreshHandler = handler;
 		mRefresh.setHandler(handler);
 	}
 
@@ -112,22 +114,51 @@ public class FileView extends RelativeLayout {
 
 	public void refresh() {
 		setLoading(true);
-		Mission<String> loader = new Mission<String>() {
-			@Override
-			public String execute(String none) {
-				mRefreshHandler.run();
-				return none;
-			}
-		};
-		Mission<String> handler = new Mission<String>() {
-			@Override
-			public Void execute(String none) {
-				setLoading(false);
-				return null;
-			}
-		};
-		AsyncMissionTask<String, Void, String> task = new AsyncMissionTask<>(loader, handler);
-		task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
+//		Mission<String> loader = new Mission<String>() {
+//			@Override
+//			public String execute(String none) {
+//				mRefreshHandler.run();
+//				return none;
+//			}
+//		};
+//		Mission<String> handler = new Mission<String>() {
+//			@Override
+//			public Void execute(String none) {
+//				setLoading(false);
+//				return null;
+//			}
+//		};
+//		AsyncMissionTask<String, Void, String> task = new AsyncMissionTask<>(loader, handler);
+//		task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
+
+		Collections.sort(mContent, new NameOrder());
+		ArrayList<ListItem> result = new ArrayList<ListItem>();
+		for (IFile f : mContent) {
+			result.add(createItem(f));
+		}
+		setItems(result);
+
+//		Mission<List<IFile>> loader = new Mission<List<IFile>>() {
+//			@Override
+//			public List<ListItem> execute(List<IFile> input) {
+//				ArrayList<ListItem> result = new ArrayList<ListItem>();
+//				for (IFile f : input) {
+//					result.add(createItem(f));
+//				}
+//				return result;
+//			}
+//		};
+//		Mission<List<ListItem>> handler = new Mission<List<ListItem>>() {
+//			@Override
+//			public Void execute(List<ListItem> items) {
+//				setItems(items);
+//				return null;
+//			}
+//		};
+//		AsyncMissionTask<List<IFile>, Void, List<ListItem>> task = new AsyncMissionTask<>(loader, handler);
+//		Collections.sort(mContent, new NameOrder());
+//		task.execute(mContent);
+
 	}
 
 	public void update() {
@@ -143,28 +174,10 @@ public class FileView extends RelativeLayout {
 	}
 
 	public void setData(List<IFile> datas) {
+		mContent = datas;
 		mAdapter.clear();
-		mListView.setAdapter(mAdapter);
-		Mission<List<IFile>> loader = new Mission<List<IFile>>() {
-			@Override
-			public List<ListItem> execute(List<IFile> input) {
-				ArrayList<ListItem> result = new ArrayList<ListItem>();
-				for (IFile f : input) {
-					result.add(createItem(f));
-				}
-				return result;
-			}
-		};
-		Mission<List<ListItem>> handler = new Mission<List<ListItem>>() {
-			@Override
-			public Void execute(List<ListItem> items) {
-				setItems(items);
-				return null;
-			}
-		};
-		AsyncMissionTask<List<IFile>, Void, List<ListItem>> task = new AsyncMissionTask<>(loader, handler);
-		Collections.sort(datas, new NameOrder());
-		task.execute(datas);
+//		mListView.setAdapter(mAdapter);
+		refresh();
 	}
 
 	public void setPosition(Pair<Integer, Integer> position) {
