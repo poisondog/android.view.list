@@ -55,6 +55,14 @@ public class ListItemView extends LinearLayout {
 		init(context);
 	}
 
+	/**
+	 * Constructor
+	 */
+	public ListItemView(Context context, AttributeSet attribute, int style) {
+		super(context, attribute, style);
+		init(context);
+	}
+
 	private void init(Context context) {
 		LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		mRoot = inflater.inflate(R.layout.image_list_item, null, false);

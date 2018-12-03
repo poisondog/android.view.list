@@ -79,6 +79,10 @@ public class ListAdapter extends BaseAdapter {
 		mItems.set(index, file);
 	}
 
+	public void setViewCreator(Mission<ListItem> creator) {
+		mViewCreator = creator;
+	}
+
 	public void removeItem(int index) {
 		mItems.remove(index);
 	}
