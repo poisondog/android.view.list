@@ -44,4 +44,4 @@ dependencies {
 	compile 'poisondog:poisondog.android.util:0.0.12@aar'
 }
 
-apply from: 'bintray.gradle'
+apply from: 'https://raw.githubusercontent.com/poisondog/gradle.tool/master/android/bintray.gradle'
