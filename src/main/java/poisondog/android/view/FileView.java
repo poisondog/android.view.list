@@ -26,8 +26,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import poisondog.android.mission.ScrollTopRefresh;
-import poisondog.android.os.AsyncMissionTask;
-import poisondog.android.os.AsyncTask;
 import poisondog.android.view.list.ListAdapter;
 import poisondog.android.view.list.ListItem;
 import poisondog.android.view.list.R;
@@ -81,12 +79,7 @@ public class FileView extends RelativeLayout {
 		mListView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 		mListView.setOnScrollListener(new ScrollTopRefresh(mRefresh));
 		mRefresh.addView(mListView);
-		mRefresh.setHandler(new Runnable() {
-			@Override
-			public void run() {
-				refresh();
-			}
-		});
+		mRefresh.setHandler(new DefaultRefresh());
 
 		mLoading.setView(mRefresh);
 		addView(mLoading);
@@ -94,7 +87,6 @@ public class FileView extends RelativeLayout {
 	}
 
 	public void setRefreshHandler(Runnable handler) {
-//		mRefreshHandler = handler;
 		mRefresh.setHandler(handler);
 	}
 
@@ -105,7 +97,6 @@ public class FileView extends RelativeLayout {
 	public void setLoading(boolean flag) {
 		if (flag) {
 			mAdapter.clear();
-//			mListView.setAdapter(mAdapter);
 		}
 		mLoading.setLoading(flag);
 	}
@@ -116,55 +107,6 @@ public class FileView extends RelativeLayout {
 
 	public void remove(int index) {
 		mAdapter.removeItem(index);
-	}
-
-	public void refresh() {
-		setLoading(true);
-//		Mission<String> loader = new Mission<String>() {
-//			@Override
-//			public String execute(String none) {
-//				mRefreshHandler.run();
-//				return none;
-//			}
-//		};
-//		Mission<String> handler = new Mission<String>() {
-//			@Override
-//			public Void execute(String none) {
-//				setLoading(false);
-//				return null;
-//			}
-//		};
-//		AsyncMissionTask<String, Void, String> task = new AsyncMissionTask<>(loader, handler);
-//		task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "");
-
-		Collections.sort(mContent, new NameOrder());
-		ArrayList<ListItem> result = new ArrayList<ListItem>();
-		for (IFile f : mContent) {
-			result.add(createItem(f));
-		}
-		setItems(result);
-
-//		Mission<List<IFile>> loader = new Mission<List<IFile>>() {
-//			@Override
-//			public List<ListItem> execute(List<IFile> input) {
-//				ArrayList<ListItem> result = new ArrayList<ListItem>();
-//				for (IFile f : input) {
-//					result.add(createItem(f));
-//				}
-//				return result;
-//			}
-//		};
-//		Mission<List<ListItem>> handler = new Mission<List<ListItem>>() {
-//			@Override
-//			public Void execute(List<ListItem> items) {
-//				setItems(items);
-//				return null;
-//			}
-//		};
-//		AsyncMissionTask<List<IFile>, Void, List<ListItem>> task = new AsyncMissionTask<>(loader, handler);
-//		Collections.sort(mContent, new NameOrder());
-//		task.execute(mContent);
-
 	}
 
 	public void update() {
@@ -179,11 +121,10 @@ public class FileView extends RelativeLayout {
 		mAdapter.notifyDataSetChanged();
 	}
 
-	public void setData(List<IFile> datas) {
+	public void setFiles(List<IFile> datas) {
 		mContent = datas;
 		mAdapter.clear();
-//		mListView.setAdapter(mAdapter);
-		refresh();
+		mRefresh.onRefresh();
 	}
 
 	public void setPosition(Pair<Integer, Integer> position) {
@@ -233,4 +174,18 @@ public class FileView extends RelativeLayout {
 			return item;
 		}
 	}
+
+	class DefaultRefresh implements Runnable {
+		@Override
+		public void run() {
+			setLoading(true);
+			Collections.sort(mContent, new NameOrder());
+			ArrayList<ListItem> result = new ArrayList<ListItem>();
+			for (IFile f : mContent) {
+				result.add(createItem(f));
+			}
+			setItems(result);
+		}
+	}
+
 }

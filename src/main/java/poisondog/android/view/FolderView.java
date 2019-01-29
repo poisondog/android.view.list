@@ -83,7 +83,7 @@ public class FolderView extends FileView {
 		@Override
 		public void run() {
 			try {
-				setData(mCurrent.getChildren());
+				setFiles(mCurrent.getChildren());
 			} catch(Exception e) {
 				e.printStackTrace();
 			}

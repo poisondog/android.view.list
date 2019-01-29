@@ -4,12 +4,15 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Environment;
-import android.widget.ListView;
+import java.util.ArrayList;
 import java.util.Collection;
-import poisondog.android.view.list.ListAdapter;
-import poisondog.android.view.list.SimpleItem;
-import poisondog.format.SizeFormatUtils;
+import poisondog.android.view.FileView;
 import poisondog.android.view.list.app.R;
+import poisondog.android.view.list.ListAdapter;
+import poisondog.android.view.list.ListItem;
+import poisondog.android.view.list.SimpleItem;
+import poisondog.core.Mission;
+import poisondog.format.SizeFormatUtils;
 import poisondog.format.TimeFormatUtils;
 import poisondog.net.URLUtils;
 import poisondog.vfs.FileFactory;
@@ -28,32 +31,31 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
-		ListView list = (ListView) findViewById(R.id.resources);
-		ListAdapter adapter = new ListAdapter(this);
-		adapter.addItem(new SimpleItem("title 1"));
-		adapter.addItem(new SimpleItem("title 2", "hey", "hello"));
-		adapter.addItem(new SimpleItem("title 3", "world", "!!"));
-		list.setAdapter(adapter);
+		FileView list = (FileView) findViewById(R.id.resources);
 
 		String download = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + "/";
 		try {
 			IFolder mFolder = (IFolder)FileFactory.getFile(download);
 			FileFilter filter = new FileFilter();
 			filter.setIncludeRule(new OnlyImage());
-			Collection<IFile> result = filter.execute(mFolder.getChildren());
-			for (IFile f : result) {
-				IData data = (IData)f;
-				String filename = URLUtils.file(f.getUrl());
-				String time = TimeFormatUtils.toString(f.getLastModifiedTime());
-				String size = SizeFormatUtils.toString(data.getSize());
-				SimpleItem item = new SimpleItem(filename, time, size);
-				item.setDefaultImage(R.drawable.file_txt);
-				item.setImage(data.getUrl());
-				adapter.addItem(item);
-			}
-			adapter.notifyDataSetChanged();
+			list.setItemCreator(new PhotoCreator());
+			list.setFiles(new ArrayList<IFile>(filter.execute(mFolder.getChildren())));
 		} catch(Exception e) {
 			e.printStackTrace();
+		}
+	}
+
+	class PhotoCreator implements Mission<IFile> {
+		@Override
+		public ListItem execute(IFile f) throws Exception {
+			IData data = (IData)f;
+			String filename = URLUtils.file(f.getUrl());
+			String time = TimeFormatUtils.toString(f.getLastModifiedTime());
+			String size = SizeFormatUtils.toString(data.getSize());
+			SimpleItem item = new SimpleItem(filename, time, size);
+			item.setDefaultImage(R.drawable.file_txt);
+			item.setImage(data.getUrl());
+			return item;
 		}
 	}
 
