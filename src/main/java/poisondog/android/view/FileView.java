@@ -157,7 +157,7 @@ public class FileView extends RelativeLayout {
 		mListView.setOnItemLongClickListener(listener);
 	}
 
-	private ListItem createItem(IFile f) {
+	public ListItem createItem(IFile f) {
 		try {
 			return (ListItem) mItemCreator.execute(f);
 		} catch(Exception e) {
