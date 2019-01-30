@@ -48,6 +48,7 @@ public class FileView extends RelativeLayout {
 	protected RefreshList mRefresh;
 	private ListAdapter mAdapter;
 	private LoadingView mLoading;
+	private EmptyView mEmpty;
 	private Mission<IFile> mItemCreator;
 	private List<IFile> mContent;
 
@@ -72,6 +73,7 @@ public class FileView extends RelativeLayout {
 		mAdapter = new ListAdapter(context);
 		mRefresh = new RefreshList(context);
 		mLoading = new LoadingView(context);
+		mEmpty = new EmptyView(context);
 		mContent = new ArrayList<IFile>();
 
 		mListView = new ListView(context);
@@ -81,7 +83,8 @@ public class FileView extends RelativeLayout {
 		mRefresh.addView(mListView);
 		mRefresh.setHandler(new DefaultRefresh());
 
-		mLoading.setView(mRefresh);
+		mEmpty.setContent(mRefresh);
+		mLoading.setContent(mEmpty);
 		addView(mLoading);
 		setLoading(false);
 	}
@@ -99,6 +102,14 @@ public class FileView extends RelativeLayout {
 			mAdapter.clear();
 		}
 		mLoading.setLoading(flag);
+	}
+
+	public void setEmpty(boolean flag) {
+		mEmpty.setEmpty(flag);
+	}
+
+	public void setEmpty(View view) {
+		mEmpty.setEmpty(view);
 	}
 
 	public void update(int position, IFile file) {
