@@ -43,7 +43,7 @@ public class MainActivity extends Activity {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		list.setEmpty(true);
+//		list.setEmpty(true);
 	}
 
 	class PhotoCreator implements Mission<IFile> {
