@@ -124,6 +124,10 @@ public class FileView extends RelativeLayout {
 		mAdapter.notifyDataSetChanged();
 	}
 
+	public void refresh() {
+		mRefresh.onRefresh();
+	}
+
 	public void setItems(List<ListItem> items) {
 		for (ListItem item : items) {
 			mAdapter.addItem(item);
