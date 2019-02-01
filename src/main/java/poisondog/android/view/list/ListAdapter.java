@@ -116,20 +116,20 @@ public class ListAdapter extends BaseAdapter {
 		return null;
 	}
 
-	public TextView getSubtitle(View row) {
-		return (TextView) row.findViewById(R.id.subtitle);
-	}
-
-	public TextView getComment(View row) {
-		return (TextView) row.findViewById(R.id.comment);
-	}
-
 	@Override
 	public boolean isEmpty() {
 		return mItems.isEmpty();
 	}
 
-	public void setSubtitleHandler(UpdateHandler handler) {
+	private TextView getSubtitle(View row) {
+		return (TextView) row.findViewById(R.id.subtitle);
+	}
+
+	private TextView getComment(View row) {
+		return (TextView) row.findViewById(R.id.comment);
+	}
+
+	private void setSubtitleHandler(UpdateHandler handler) {
 		mSubtitleHandler = handler;
 	}
 

@@ -4,11 +4,12 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Environment;
+import android.view.View;
+import android.widget.LinearLayout;
 import java.util.ArrayList;
-import java.util.Collection;
 import poisondog.android.view.FileView;
+import poisondog.android.view.FileView2;
 import poisondog.android.view.list.app.R;
-import poisondog.android.view.list.ListAdapter;
 import poisondog.android.view.list.ListItem;
 import poisondog.android.view.list.SimpleItem;
 import poisondog.core.Mission;
@@ -31,8 +32,9 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
-		FileView list = (FileView) findViewById(R.id.resources);
-
+		LinearLayout root = (LinearLayout) findViewById(R.id.root);
+//		FileView list = new FileView(this);
+		FileView2 list = new FileView2(this);
 		String download = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + "/";
 		try {
 			IFolder mFolder = (IFolder)FileFactory.getFile(download);
@@ -44,6 +46,8 @@ public class MainActivity extends Activity {
 			e.printStackTrace();
 		}
 //		list.setEmpty(true);
+//		list.setVisibility(View.GONE);
+		root.addView(list);
 	}
 
 	class PhotoCreator implements Mission<IFile> {
@@ -59,5 +63,4 @@ public class MainActivity extends Activity {
 			return item;
 		}
 	}
-
 }
