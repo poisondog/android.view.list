@@ -103,6 +103,10 @@ public class FileView2 extends RelativeLayout {
 		setLoading(false);
 	}
 
+	public void setLayoutManager(RecyclerView.LayoutManager manager) {
+		mRecyclerView.setLayoutManager(manager);
+	}
+
 	public void setRefreshHandler(Runnable handler) {
 		mRefresh.setHandler(handler);
 	}
@@ -113,6 +117,7 @@ public class FileView2 extends RelativeLayout {
 
 	public void setLoading(boolean flag) {
 		if (flag) {
+			// TODO 這裡 clear 怪怪的
 			mRecyclerAdapter.clear();
 		}
 		mLoading.setLoading(flag);
@@ -142,9 +147,7 @@ public class FileView2 extends RelativeLayout {
 	}
 
 	public void setItems(List<ListItem> items) {
-		for (ListItem item : items) {
-			mRecyclerAdapter.addItem(item);
-		}
+		mRecyclerAdapter.setItems(items);
 		setLoading(false);
 	}
 
@@ -154,10 +157,12 @@ public class FileView2 extends RelativeLayout {
 		mRefresh.onRefresh();
 	}
 
+	// TODO 修正
 	public void setOnItemClickListener(AdapterView.OnItemClickListener listener) {
 		mListView.setOnItemClickListener(listener);
 	}
 
+	// TODO 修正
 	public void setOnItemLongClickListener(AdapterView.OnItemLongClickListener listener) {
 		mListView.setOnItemLongClickListener(listener);
 	}

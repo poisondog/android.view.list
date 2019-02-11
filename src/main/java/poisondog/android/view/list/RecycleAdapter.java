@@ -19,18 +19,15 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 import poisondog.android.image.ImageFetcher;
 import poisondog.android.view.list.ListItem;
-import poisondog.android.view.list.R;
-import poisondog.core.Mission;
 
 /**
  * @author poisondog <poisondog@gmail.com>
  */
-public class RecycleAdapter extends RecyclerView.Adapter<RecycleViewHolder> {
+public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.RecycleViewHolder> {
 	private Context mContext;
 	private List<ListItem> mItems;
 	private ImageFetcher mFetcher;
@@ -126,5 +123,21 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleViewHolder> {
 	@Override
 	public int getItemCount() {
 		return mItems.size();
+	}
+
+	class RecycleViewHolder extends RecyclerView.ViewHolder {
+		private ListItemView mView;
+
+		/**
+		 * Constructor
+		 */
+		public RecycleViewHolder(ListItemView v) {
+			super(v);
+			mView = v;
+		}
+
+		public ListItemView getItemView() {
+			return mView;
+		}
 	}
 }
