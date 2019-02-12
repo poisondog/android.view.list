@@ -35,10 +35,10 @@ import poisondog.core.Mission;
  */
 public class ListAdapter extends BaseAdapter {
 	private Context mContext;
-	private List<ListItem> mItems;
+	private List<DataItem> mItems;
 	private UpdateHandler mSubtitleHandler;
 	private ImageFetcher mFetcher;
-	private Mission<ListItem> mViewCreator;
+	private Mission<DataItem> mViewCreator;
 
 	/**
 	 * Constructor
@@ -46,7 +46,7 @@ public class ListAdapter extends BaseAdapter {
 	public ListAdapter(Context context) {
 		super();
 		mContext = context;
-		mItems = new ArrayList<ListItem>();
+		mItems = new ArrayList<DataItem>();
 		mViewCreator = new ListItemViewCreator();
 
 		try {
@@ -56,7 +56,7 @@ public class ListAdapter extends BaseAdapter {
 		}
 	}
 
-	public ListAdapter(Context context, List<ListItem> items) {
+	public ListAdapter(Context context, List<DataItem> items) {
 		this(context);
 		mItems = items;
 	}
@@ -65,21 +65,21 @@ public class ListAdapter extends BaseAdapter {
 		mItems.clear();
 	}
 
-	public void addItem(ListItem file) {
+	public void addItem(DataItem file) {
 		mItems.add(file);
 		notifyDataSetChanged();
 	}
 
-	public void setItems(List<ListItem> items) {
+	public void setItems(List<DataItem> items) {
 		mItems = items;
 		notifyDataSetChanged();
 	}
 
-	public void setItem(int index, ListItem file) {
+	public void setItem(int index, DataItem file) {
 		mItems.set(index, file);
 	}
 
-	public void setViewCreator(Mission<ListItem> creator) {
+	public void setViewCreator(Mission<DataItem> creator) {
 		mViewCreator = creator;
 	}
 
@@ -87,7 +87,7 @@ public class ListAdapter extends BaseAdapter {
 		mItems.remove(index);
 	}
 
-	public List<ListItem> getItems() {
+	public List<DataItem> getItems() {
 		return mItems;
 	}
 
@@ -97,7 +97,7 @@ public class ListAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public ListItem getItem(int position) {
+	public DataItem getItem(int position) {
 		return mItems.get(position);
 	}
 
@@ -133,16 +133,16 @@ public class ListAdapter extends BaseAdapter {
 		mSubtitleHandler = handler;
 	}
 
-	class ListItemViewCreator implements Mission<ListItem> {
+	class ListItemViewCreator implements Mission<DataItem> {
 		@Override
-		public ListItemView execute(ListItem item) {
+		public ListItemView execute(DataItem item) {
 			ListItemView row = new ListItemView(mContext);
 			update(row, item);
 			return row;
 		}
 	}
 
-	private void update(final ListItemView row, final ListItem obj) {
+	private void update(final ListItemView row, final DataItem obj) {
 		row.getTitle().setText(obj.getTitle());
 //		AsyncTask<String, Void, String> updateTitle = new AsyncTask<String, Void, String>() {
 //			@Override

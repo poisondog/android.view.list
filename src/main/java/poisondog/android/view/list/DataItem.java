@@ -19,7 +19,7 @@ package poisondog.android.view.list;
  * @author Adam Huang
  * @since 2018-01-22
  */
-public interface ListItem {
+public interface DataItem {
 	public String getTitle();
 	public String getSubtitle();
 	public String getComment();

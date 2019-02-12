@@ -17,19 +17,16 @@ package poisondog.android.view.list;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 /**
  * @author Adam Huang
  * @since 2017-12-28
  */
-public class ListItemView extends LinearLayout implements ItemView {
-	private View mRoot;
+public class GridItemView extends RelativeLayout implements ItemView {
 	private ImageView mImage;
 	private ImageView mState;
 	private TextView mTitle;
@@ -42,38 +39,37 @@ public class ListItemView extends LinearLayout implements ItemView {
 	/**
 	 * Constructor
 	 */
-	public ListItemView(Context context) {
+	public GridItemView(Context context) {
 		super(context);
-		init(context);
+		initial();
 	}
 
 	/**
 	 * Constructor
 	 */
-	public ListItemView(Context context, AttributeSet attribute) {
+	public GridItemView(Context context, AttributeSet attribute) {
 		super(context, attribute);
-		init(context);
+		initial();
 	}
 
 	/**
 	 * Constructor
 	 */
-	public ListItemView(Context context, AttributeSet attribute, int style) {
+	public GridItemView(Context context, AttributeSet attribute, int style) {
 		super(context, attribute, style);
-		init(context);
+		initial();
 	}
 
-	private void init(Context context) {
-		LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		mRoot = inflater.inflate(R.layout.image_list_item, null, false);
-		mImage = (ImageView) mRoot.findViewById(R.id.image);
-		mState = (ImageView) mRoot.findViewById(R.id.state);
-		mHide = (TextView) mRoot.findViewById(R.id.hide);
-		mTitle = (TextView) mRoot.findViewById(R.id.title);
-		mSubtitle = (TextView) mRoot.findViewById(R.id.subtitle);
-		mComment = (TextView) mRoot.findViewById(R.id.comment);
-		mProgress = (ProgressBar) mRoot.findViewById(R.id.progress);
-		addView(mRoot);
+	private void initial() {
+		inflate(getContext(), R.layout.image_grid_item, this);
+		mImage = (ImageView) findViewById(R.id.image);
+		mState = (ImageView) findViewById(R.id.state);
+		mHide = (TextView) findViewById(R.id.hide);
+		mTitle = (TextView) findViewById(R.id.title);
+		mSubtitle = (TextView) findViewById(R.id.subtitle);
+		mComment = (TextView) findViewById(R.id.comment);
+		mProgress = (ProgressBar) findViewById(R.id.progress);
+		setPadding(5, 5, 5, 5);
 	}
 
 	@Override

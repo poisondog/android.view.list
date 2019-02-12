@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Adam Huang
+ * Copyright (C) 2019 Adam Huang <poisondog@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,30 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package poisondog.android.view.list;
 
 import android.widget.TextView;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+
 /**
- * @author Adam Huang <poisondog@gmail.com>
+ * @author Adam Huang
+ * @since 2019-02-12
  */
-public interface ComplexListItem extends DataItem {
-	public String getHideMessage();
-	/**
-	 * for async task use, so design it
-	 */
-	public void setSubTitle(TextView view);
-	/**
-	 * for async task use, so design it
-	 */
-	public void setComment(TextView view);
-	/**
-	 * for async task use, so design it
-	 */
-	public void setImage(ImageView view);
-	/**
-	 * for async task use, so design it
-	 */
-	public void setState(ImageView view);
+public interface ItemView {
+	public ImageView getImage();
+	public ImageView getState();
+	public TextView getTitle();
+	public TextView getSubtitle();
+	public TextView getComment();
+	public ProgressBar getProgress();
+	public void setData(Object data);
+	public Object getData();
 }

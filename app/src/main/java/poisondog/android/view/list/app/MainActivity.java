@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import poisondog.android.view.FileView;
 import poisondog.android.view.FileView2;
 import poisondog.android.view.list.app.R;
-import poisondog.android.view.list.ListItem;
+import poisondog.android.view.list.DataItem;
 import poisondog.android.view.list.SimpleItem;
 import poisondog.core.Mission;
 import poisondog.format.SizeFormatUtils;
@@ -52,7 +52,7 @@ public class MainActivity extends Activity {
 
 	class PhotoCreator implements Mission<IFile> {
 		@Override
-		public ListItem execute(IFile f) throws Exception {
+		public DataItem execute(IFile f) throws Exception {
 			IData data = (IData)f;
 			String filename = URLUtils.file(f.getUrl());
 			String time = TimeFormatUtils.toString(f.getLastModifiedTime());

@@ -22,15 +22,17 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 import poisondog.android.image.ImageFetcher;
-import poisondog.android.view.list.ListItem;
+import poisondog.android.view.list.DataItem;
+import poisondog.core.Mission;
 
 /**
  * @author poisondog <poisondog@gmail.com>
  */
 public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.RecycleViewHolder> {
 	private Context mContext;
-	private List<ListItem> mItems;
+	private List<DataItem> mItems;
 	private ImageFetcher mFetcher;
+	private Mission<Context> mItemViewFactor;
 
 	/**
 	 * Constructor
@@ -38,7 +40,8 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.RecycleV
 	public RecycleAdapter(Context context) {
 		super();
 		mContext = context;
-		mItems = new ArrayList<ListItem>();
+		mItems = new ArrayList<DataItem>();
+		mItemViewFactor = new DefaultItemViewFactory();
 
 		try {
 			mFetcher = new ImageFetcher(mContext, 500, 500, mContext.getExternalCacheDir().getPath() + "/");
@@ -47,7 +50,10 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.RecycleV
 		}
 	}
 
-	public RecycleAdapter(Context context, List<ListItem> items) {
+	/**
+	 * Constructor
+	 */
+	public RecycleAdapter(Context context, List<DataItem> items) {
 		this(context);
 		mItems = items;
 	}
@@ -56,15 +62,15 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.RecycleV
 		mItems.clear();
 	}
 
-	public void addItem(ListItem file) {
+	public void addItem(DataItem file) {
 		mItems.add(file);
 	}
 
-	public void setItems(List<ListItem> items) {
+	public void setItems(List<DataItem> items) {
 		mItems = items;
 	}
 
-	public void setItem(int index, ListItem file) {
+	public void setItem(int index, DataItem file) {
 		mItems.set(index, file);
 	}
 
@@ -72,15 +78,39 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.RecycleV
 		mItems.remove(index);
 	}
 
-	public List<ListItem> getItems() {
+	public List<DataItem> getItems() {
 		return mItems;
 	}
 
-	public ListItem getItem(int position) {
+	public DataItem getItem(int position) {
 		return mItems.get(position);
 	}
 
-	private void update(final ListItemView row, final ListItem obj) {
+	public void setItemViewFactory(Mission<Context> factory) {
+		mItemViewFactor = factory;
+	}
+
+	class DefaultItemViewFactory implements Mission<Context> {
+		@Override
+		public GridItemView execute(Context context) {
+			return new GridItemView(context);
+		}
+	}
+
+	@Override
+	public RecycleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+		try {
+			return new RecycleViewHolder((ItemView) mItemViewFactor.execute(parent.getContext()));
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public void onBindViewHolder(RecycleViewHolder holder, int position) {
+		ItemView row = holder.getItemView();
+		DataItem obj = getItem(position);
 		row.getTitle().setText(obj.getTitle());
 		if (obj.getSubtitle() == null)
 			row.getSubtitle().setVisibility(View.GONE);
@@ -110,33 +140,22 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.RecycleV
 	}
 
 	@Override
-	public RecycleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-		ListItemView view = new ListItemView(parent.getContext());
-		return new RecycleViewHolder(view);
-	}
-
-	@Override
-	public void onBindViewHolder(RecycleViewHolder holder, int position) {
-		update(holder.getItemView(), getItem(position));
-	}
-
-	@Override
 	public int getItemCount() {
 		return mItems.size();
 	}
 
 	class RecycleViewHolder extends RecyclerView.ViewHolder {
-		private ListItemView mView;
+		private ItemView mView;
 
 		/**
 		 * Constructor
 		 */
-		public RecycleViewHolder(ListItemView v) {
-			super(v);
+		public RecycleViewHolder(ItemView v) {
+			super((View)v);
 			mView = v;
 		}
 
-		public ListItemView getItemView() {
+		public ItemView getItemView() {
 			return mView;
 		}
 	}

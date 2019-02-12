@@ -21,7 +21,7 @@ import poisondog.android.view.list.R;
  * @author Adam Huang
  * @since 2018-01-22
  */
-public class SimpleItem implements ListItem {
+public class SimpleItem implements DataItem {
 	private String mTitle;
 	private String mSubtitle;
 	private String mComment;

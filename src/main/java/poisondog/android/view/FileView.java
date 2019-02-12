@@ -27,7 +27,7 @@ import java.util.Collections;
 import java.util.List;
 import poisondog.android.mission.ScrollTopRefresh;
 import poisondog.android.view.list.ListAdapter;
-import poisondog.android.view.list.ListItem;
+import poisondog.android.view.list.DataItem;
 import poisondog.android.view.list.R;
 import poisondog.android.view.list.SimpleItem;
 import poisondog.android.view.LoadingView;
@@ -128,8 +128,8 @@ public class FileView extends RelativeLayout {
 		mRefresh.onRefresh();
 	}
 
-	public void setItems(List<ListItem> items) {
-		for (ListItem item : items) {
+	public void setItems(List<DataItem> items) {
+		for (DataItem item : items) {
 			mAdapter.addItem(item);
 		}
 		setLoading(false);
@@ -161,9 +161,9 @@ public class FileView extends RelativeLayout {
 		mListView.setOnItemLongClickListener(listener);
 	}
 
-	public ListItem createItem(IFile f) {
+	public DataItem createItem(IFile f) {
 		try {
-			return (ListItem) mItemCreator.execute(f);
+			return (DataItem) mItemCreator.execute(f);
 		} catch(Exception e) {
 		}
 		return null;
@@ -171,7 +171,7 @@ public class FileView extends RelativeLayout {
 
 	class DefaultCreator implements Mission<IFile> {
 		@Override
-		public ListItem execute(IFile f) {
+		public DataItem execute(IFile f) {
 			String filename = "Unknown";
 			String time = "";
 			try {
@@ -195,7 +195,7 @@ public class FileView extends RelativeLayout {
 		public void run() {
 			setLoading(true);
 			Collections.sort(mContent, new NameOrder());
-			ArrayList<ListItem> result = new ArrayList<ListItem>();
+			ArrayList<DataItem> result = new ArrayList<DataItem>();
 			for (IFile f : mContent) {
 				result.add(createItem(f));
 			}
