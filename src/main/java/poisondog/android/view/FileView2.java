@@ -92,7 +92,21 @@ public class FileView2 extends RelativeLayout {
 		mRecyclerView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 		mRecyclerView.setOnScrollListener(new ScrollTopRefresh(mRefresh));
 //		mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
-		mRecyclerView.setLayoutManager(new GridLayoutManager(context, 2));
+		GridLayoutManager mLayoutManager = new GridLayoutManager(context, 2);
+		mLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+			@Override
+			public int getSpanSize(int position) {
+				switch (mRecyclerAdapter.getItemViewType(position)) {
+					case 0:
+						return 1;
+					case 1:
+						return 2;
+					default:
+						return 1;
+				}
+			}
+		});
+		mRecyclerView.setLayoutManager(mLayoutManager);
 
 		mRefresh.addView(mRecyclerView);
 		mRefresh.setHandler(new DefaultRefresh());
@@ -107,7 +121,7 @@ public class FileView2 extends RelativeLayout {
 		mRecyclerView.setLayoutManager(manager);
 	}
 
-	public void setItemViewFactory(Mission<Context> factory) {
+	public void setItemViewFactory(Mission<Integer> factory) {
 		mRecyclerAdapter.setItemViewFactory(factory);
 	}
 
@@ -161,14 +175,12 @@ public class FileView2 extends RelativeLayout {
 		mRefresh.onRefresh();
 	}
 
-	// TODO 修正
-	public void setOnItemClickListener(AdapterView.OnItemClickListener listener) {
-		mListView.setOnItemClickListener(listener);
+	public void setOnClickListener(View.OnClickListener listener) {
+		mRecyclerAdapter.setOnClickListener(listener);
 	}
 
-	// TODO 修正
-	public void setOnItemLongClickListener(AdapterView.OnItemLongClickListener listener) {
-		mListView.setOnItemLongClickListener(listener);
+	public void setOnLongClickListener(View.OnLongClickListener listener) {
+		mRecyclerAdapter.setOnLongClickListener(listener);
 	}
 
 	public DataItem createItem(IFile f) {
@@ -206,8 +218,11 @@ public class FileView2 extends RelativeLayout {
 			setLoading(true);
 			Collections.sort(mContent, new NameOrder());
 			ArrayList<DataItem> result = new ArrayList<DataItem>();
+			String group = null;
 			for (IFile f : mContent) {
 				result.add(createItem(f));
+				if (Math.random() < 0.1)
+					result.add(SimpleItem.header("first", "second", "third"));
 			}
 			setItems(result);
 		}

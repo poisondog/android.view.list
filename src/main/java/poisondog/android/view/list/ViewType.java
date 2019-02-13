@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Adam Huang <poisondog@gmail.com>
+ * Copyright (C) 2019 Adam Huang <poisondog@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,16 +17,8 @@ package poisondog.android.view.list;
 
 /**
  * @author Adam Huang
- * @since 2018-01-22
+ * @since 2019-02-13
  */
-public interface DataItem {
-	public String getTitle();
-	public String getSubtitle();
-	public String getComment();
-	public String getImage();
-	public String getState();
-	public Object getData();
-	public int getDefaultImage();
-	public void setData(Object object);
-	public ViewType getType();
+public enum ViewType {
+	Data, Header
 }

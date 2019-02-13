@@ -12,6 +12,7 @@ import poisondog.android.view.FileView2;
 import poisondog.android.view.list.app.R;
 import poisondog.android.view.list.DataItem;
 import poisondog.android.view.list.SimpleItem;
+import poisondog.android.view.list.ItemView;
 import poisondog.core.Mission;
 import poisondog.format.SizeFormatUtils;
 import poisondog.format.TimeFormatUtils;
@@ -41,6 +42,27 @@ public class MainActivity extends Activity {
 			FileFilter filter = new FileFilter();
 			filter.setIncludeRule(new OnlyImage());
 			list.setItemCreator(new PhotoCreator());
+			list.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					ItemView target = (ItemView) v;
+					try {
+						System.out.println(URLUtils.file(((IData)target.getData()).getUrl()));
+					} catch(Exception e) {
+					}
+				}
+			});
+			list.setOnLongClickListener(new View.OnLongClickListener() {
+				@Override
+				public boolean onLongClick(View v) {
+					ItemView target = (ItemView) v;
+					try {
+						System.out.println(((IData)target.getData()).getUrl());
+					} catch(Exception e) {
+					}
+					return true;
+				}
+			});
 			list.setFiles(new ArrayList<IFile>(filter.execute(mFolder.getChildren())));
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -59,6 +81,7 @@ public class MainActivity extends Activity {
 			String size = SizeFormatUtils.toString(data.getSize());
 			SimpleItem item = new SimpleItem(filename, time, size);
 			item.setDefaultImage(R.drawable.file_txt);
+			item.setData(data);
 			item.setImage(data.getUrl());
 			return item;
 		}

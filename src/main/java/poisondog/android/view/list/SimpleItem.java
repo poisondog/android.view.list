@@ -29,6 +29,7 @@ public class SimpleItem implements DataItem {
 	private String mState;
 	private int mResource;
 	private Object mData;
+	private ViewType mType = ViewType.Data;
 
 	/**
 	 * Constructor
@@ -44,6 +45,12 @@ public class SimpleItem implements DataItem {
 		mTitle = title;
 		mSubtitle = subtitle;
 		mComment = comment;
+	}
+
+	public static SimpleItem header(String title, String subtitle, String comment) {
+		SimpleItem item = new SimpleItem(title, subtitle, comment);
+		item.setType(ViewType.Header);
+		return item;
 	}
 
 	public String getTitle() {
@@ -67,8 +74,8 @@ public class SimpleItem implements DataItem {
 	public Object getData() {
 		return mData;
 	}
-	public void setData(Object object) {
-		mData = object;
+	public ViewType getType() {
+		return mType;
 	}
 	public void setTitle(String title) {
 		mTitle = title;
@@ -87,5 +94,11 @@ public class SimpleItem implements DataItem {
 	}
 	public void setState(String url) {
 		mState = url;
+	}
+	public void setData(Object object) {
+		mData = object;
+	}
+	public void setType(ViewType type) {
+		mType = type;
 	}
 }

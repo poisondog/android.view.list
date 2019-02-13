@@ -32,7 +32,9 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.RecycleV
 	private Context mContext;
 	private List<DataItem> mItems;
 	private ImageFetcher mFetcher;
-	private Mission<Context> mItemViewFactor;
+	private Mission<Integer> mItemViewFactor;
+	private View.OnClickListener mOnClickListener;
+	private View.OnLongClickListener mOnLongClickListener;
 
 	/**
 	 * Constructor
@@ -60,22 +62,27 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.RecycleV
 
 	public void clear() {
 		mItems.clear();
+		notifyDataSetChanged();
 	}
 
 	public void addItem(DataItem file) {
 		mItems.add(file);
+		notifyDataSetChanged();
 	}
 
 	public void setItems(List<DataItem> items) {
 		mItems = items;
+		notifyDataSetChanged();
 	}
 
 	public void setItem(int index, DataItem file) {
 		mItems.set(index, file);
+		notifyDataSetChanged();
 	}
 
 	public void removeItem(int index) {
 		mItems.remove(index);
+		notifyDataSetChanged();
 	}
 
 	public List<DataItem> getItems() {
@@ -86,21 +93,30 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.RecycleV
 		return mItems.get(position);
 	}
 
-	public void setItemViewFactory(Mission<Context> factory) {
+	public void setItemViewFactory(Mission<Integer> factory) {
 		mItemViewFactor = factory;
 	}
 
-	class DefaultItemViewFactory implements Mission<Context> {
-		@Override
-		public GridItemView execute(Context context) {
-			return new GridItemView(context);
-		}
+	public void setOnClickListener(View.OnClickListener listener) {
+		mOnClickListener = listener;
+	}
+
+	public void setOnLongClickListener(View.OnLongClickListener listener) {
+		mOnLongClickListener = listener;
+	}
+
+	@Override
+	public int getItemViewType(int position) {
+		return getItem(position).getType().ordinal();
 	}
 
 	@Override
 	public RecycleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 		try {
-			return new RecycleViewHolder((ItemView) mItemViewFactor.execute(parent.getContext()));
+			View view = (View) mItemViewFactor.execute(viewType);
+			view.setOnClickListener(mOnClickListener);
+			view.setOnLongClickListener(mOnLongClickListener);
+			return new RecycleViewHolder((ItemView) view);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -111,6 +127,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.RecycleV
 	public void onBindViewHolder(RecycleViewHolder holder, int position) {
 		ItemView row = holder.getItemView();
 		DataItem obj = getItem(position);
+		row.setData(obj.getData());
 		row.getTitle().setText(obj.getTitle());
 		if (obj.getSubtitle() == null)
 			row.getSubtitle().setVisibility(View.GONE);
@@ -159,4 +176,14 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.RecycleV
 			return mView;
 		}
 	}
+
+	class DefaultItemViewFactory implements Mission<Integer> {
+		@Override
+		public ItemView execute(Integer viewType) {
+			if (ViewType.values()[viewType] == ViewType.Header)
+				return new HeaderItemView(mContext);
+			return new GridItemView(mContext);
+		}
+	}
+
 }
