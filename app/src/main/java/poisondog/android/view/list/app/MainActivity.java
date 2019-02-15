@@ -4,19 +4,23 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v7.widget.GridLayoutManager;
 import android.view.View;
 import android.widget.LinearLayout;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import poisondog.android.view.FileView;
-import poisondog.android.view.FileView2;
+import poisondog.android.view.EntityView;
 import poisondog.android.view.list.app.R;
 import poisondog.android.view.list.DataItem;
-import poisondog.android.view.list.SimpleItem;
 import poisondog.android.view.list.ItemView;
+import poisondog.android.view.list.SimpleItem;
 import poisondog.core.Mission;
 import poisondog.format.SizeFormatUtils;
 import poisondog.format.TimeFormatUtils;
 import poisondog.net.URLUtils;
+import poisondog.vfs.comparator.NameOrder;
 import poisondog.vfs.FileFactory;
 import poisondog.vfs.filter.FileFilter;
 import poisondog.vfs.filter.OnlyImage;
@@ -24,9 +28,10 @@ import poisondog.vfs.IData;
 import poisondog.vfs.IFile;
 import poisondog.vfs.IFolder;
 
-
 public class MainActivity extends Activity {
 	private DialogInterface.OnClickListener mListener;
+	private EntityView mRoot;
+	private List<IFile> mContent;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,15 +39,35 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.main);
 
 		LinearLayout root = (LinearLayout) findViewById(R.id.root);
-//		FileView list = new FileView(this);
-		FileView2 list = new FileView2(this);
+//		mRoot = new FileView(this);
+		mRoot = new EntityView(this);
+		GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
+		layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+			@Override
+			public int getSpanSize(int position) {
+				switch (mRoot.getItemViewType(position)) {
+					case 0:
+						return 1;
+					case 1:
+						return 2;
+					default:
+						return 1;
+				}
+			}
+		});
+		mRoot.setLayoutManager(layoutManager);
+		mRoot.setRefreshHandler(new RefreshData());
 		String download = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + "/";
 		try {
 			IFolder mFolder = (IFolder)FileFactory.getFile(download);
 			FileFilter filter = new FileFilter();
 			filter.setIncludeRule(new OnlyImage());
-			list.setItemCreator(new PhotoCreator());
-			list.setOnClickListener(new View.OnClickListener() {
+			mContent = new ArrayList<IFile>(filter.execute(mFolder.getChildren()));
+			mRoot.refresh();
+//			mRoot.setFiles(mContent);
+
+//			mRoot.setItemCreator(new PhotoCreator());
+			mRoot.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					ItemView target = (ItemView) v;
@@ -52,7 +77,7 @@ public class MainActivity extends Activity {
 					}
 				}
 			});
-			list.setOnLongClickListener(new View.OnLongClickListener() {
+			mRoot.setOnLongClickListener(new View.OnLongClickListener() {
 				@Override
 				public boolean onLongClick(View v) {
 					ItemView target = (ItemView) v;
@@ -63,13 +88,12 @@ public class MainActivity extends Activity {
 					return true;
 				}
 			});
-			list.setFiles(new ArrayList<IFile>(filter.execute(mFolder.getChildren())));
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-//		list.setEmpty(true);
-//		list.setVisibility(View.GONE);
-		root.addView(list);
+//		mRoot.setEmpty(true);
+//		mRoot.setVisibility(View.GONE);
+		root.addView(mRoot);
 	}
 
 	class PhotoCreator implements Mission<IFile> {
@@ -86,4 +110,30 @@ public class MainActivity extends Activity {
 			return item;
 		}
 	}
+
+	class RefreshData implements Runnable {
+		private PhotoCreator mCreator;
+		/**
+		 * Constructor
+		 */
+		public RefreshData() {
+			mCreator = new PhotoCreator();
+		}
+		@Override
+		public void run() {
+			mRoot.setLoading(true);
+			Collections.sort(mContent, new NameOrder());
+			ArrayList<DataItem> result = new ArrayList<DataItem>();
+			for (IFile f : mContent) {
+				try {
+					result.add(mCreator.execute(f));
+				} catch(Exception e) {
+				}
+				if (Math.random() < 0.1)
+					result.add(SimpleItem.header("first", "second", "third"));
+			}
+			mRoot.setItems(result);
+		}
+	}
+
 }

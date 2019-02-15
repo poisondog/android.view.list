@@ -47,20 +47,17 @@ import poisondog.vfs.IFile;
  * @author Adam Huang
  * @since 2018-02-06
  */
-public class FileView2 extends RelativeLayout {
+public class EntityView extends RelativeLayout {
 	protected RefreshList mRefresh;
-	private ListView mListView;
 	private RecyclerView mRecyclerView;
 	private RecycleAdapter mRecyclerAdapter;
 	private LoadingView mLoading;
 	private EmptyView mEmpty;
-	private Mission<IFile> mItemCreator;
-	private List<IFile> mContent;
 
 	/**
 	 * Constructor
 	 */
-	public FileView2(Context context) {
+	public EntityView(Context context) {
 		super(context);
 		init(context);
 	}
@@ -68,48 +65,24 @@ public class FileView2 extends RelativeLayout {
 	/**
 	 * Constructor
 	 */
-	public FileView2(Context context, AttributeSet attribute) {
+	public EntityView(Context context, AttributeSet attribute) {
 		super(context, attribute);
 		init(context);
 	}
 
 	private void init(Context context) {
-		mItemCreator = new DefaultCreator();
 		mRefresh = new RefreshList(context);
 		mLoading = new LoadingView(context);
 		mEmpty = new EmptyView(context);
-		mContent = new ArrayList<IFile>();
-
-//		mAdapter = new ListAdapter(context);
-//		mListView = new ListView(context);
-//		mListView.setAdapter(mAdapter);
-//		mListView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-//		mListView.setOnScrollListener(new ScrollTopRefresh(mRefresh));
 
 		mRecyclerAdapter = new RecycleAdapter(context);
 		mRecyclerView = new RecyclerView(context);
 		mRecyclerView.setAdapter(mRecyclerAdapter);
 		mRecyclerView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 		mRecyclerView.setOnScrollListener(new ScrollTopRefresh(mRefresh));
-//		mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
-		GridLayoutManager mLayoutManager = new GridLayoutManager(context, 2);
-		mLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-			@Override
-			public int getSpanSize(int position) {
-				switch (mRecyclerAdapter.getItemViewType(position)) {
-					case 0:
-						return 1;
-					case 1:
-						return 2;
-					default:
-						return 1;
-				}
-			}
-		});
-		mRecyclerView.setLayoutManager(mLayoutManager);
+		mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
 
 		mRefresh.addView(mRecyclerView);
-		mRefresh.setHandler(new DefaultRefresh());
 
 		mEmpty.setContent(mRefresh);
 		mLoading.setContent(mEmpty);
@@ -129,15 +102,11 @@ public class FileView2 extends RelativeLayout {
 		mRefresh.setHandler(handler);
 	}
 
-	public void setItemCreator(Mission<IFile> creator) {
-		mItemCreator = creator;
+	public void clear() {
+		mRecyclerAdapter.clear();
 	}
 
 	public void setLoading(boolean flag) {
-		if (flag) {
-			// TODO 這裡 clear 怪怪的
-			mRecyclerAdapter.clear();
-		}
 		mLoading.setLoading(flag);
 	}
 
@@ -149,15 +118,8 @@ public class FileView2 extends RelativeLayout {
 		mEmpty.setEmpty(view);
 	}
 
-	public void update(int position, IFile file) {
-		mRecyclerAdapter.setItem(position, createItem(file));
-	}
-
 	public void remove(int index) {
 		mRecyclerAdapter.removeItem(index);
-	}
-
-	public void update() {
 	}
 
 	public void refresh() {
@@ -169,12 +131,6 @@ public class FileView2 extends RelativeLayout {
 		setLoading(false);
 	}
 
-	public void setFiles(List<IFile> datas) {
-		mContent = datas;
-		mRecyclerAdapter.clear();
-		mRefresh.onRefresh();
-	}
-
 	public void setOnClickListener(View.OnClickListener listener) {
 		mRecyclerAdapter.setOnClickListener(listener);
 	}
@@ -183,49 +139,8 @@ public class FileView2 extends RelativeLayout {
 		mRecyclerAdapter.setOnLongClickListener(listener);
 	}
 
-	public DataItem createItem(IFile f) {
-		try {
-			return (DataItem) mItemCreator.execute(f);
-		} catch(Exception e) {
-		}
-		return null;
-	}
-
-	class DefaultCreator implements Mission<IFile> {
-		@Override
-		public DataItem execute(IFile f) {
-			String filename = "Unknown";
-			String time = "";
-			try {
-				filename = URLUtils.file(f.getUrl());
-				time = TimeUtils.toString(f.getLastModifiedTime());
-			} catch(Exception e) {
-			}
-			SimpleItem item = new SimpleItem(filename);
-			item.setSubtitle(time);
-			item.setData(f);
-			try {
-				item.setDefaultImage(f.getUrl().endsWith("/") ? R.drawable.folder : R.drawable.file);
-			} catch(Exception e) {
-			}
-			return item;
-		}
-	}
-
-	class DefaultRefresh implements Runnable {
-		@Override
-		public void run() {
-			setLoading(true);
-			Collections.sort(mContent, new NameOrder());
-			ArrayList<DataItem> result = new ArrayList<DataItem>();
-			String group = null;
-			for (IFile f : mContent) {
-				result.add(createItem(f));
-				if (Math.random() < 0.1)
-					result.add(SimpleItem.header("first", "second", "third"));
-			}
-			setItems(result);
-		}
+	public int getItemViewType(int position) {
+		return mRecyclerAdapter.getItemViewType(position);
 	}
 
 }
