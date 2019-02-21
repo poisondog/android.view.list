@@ -34,6 +34,7 @@ import poisondog.android.view.list.DataItem;
 import poisondog.android.view.list.R;
 import poisondog.android.view.list.RecycleAdapter;
 import poisondog.android.view.list.SimpleItem;
+import poisondog.android.view.list.StickHeader;
 import poisondog.android.view.LoadingView;
 import poisondog.android.view.RefreshList;
 import poisondog.core.Mission;
@@ -81,6 +82,7 @@ public class EntityView extends RelativeLayout {
 		mRecyclerView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 		mRecyclerView.setOnScrollListener(new ScrollTopRefresh(mRefresh));
 		mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+		mRecyclerView.addItemDecoration(new StickHeader(mRecyclerView, mRecyclerAdapter));
 
 		mRefresh.addView(mRecyclerView);
 

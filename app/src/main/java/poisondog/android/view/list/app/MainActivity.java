@@ -92,7 +92,6 @@ public class MainActivity extends Activity {
 			e.printStackTrace();
 		}
 //		mRoot.setEmpty(true);
-//		mRoot.setVisibility(View.GONE);
 		root.addView(mRoot);
 	}
 
@@ -124,6 +123,7 @@ public class MainActivity extends Activity {
 			mRoot.setLoading(true);
 			Collections.sort(mContent, new NameOrder());
 			ArrayList<DataItem> result = new ArrayList<DataItem>();
+			result.add(SimpleItem.header("Head", "second", "third"));
 			for (IFile f : mContent) {
 				try {
 					result.add(mCreator.execute(f));
