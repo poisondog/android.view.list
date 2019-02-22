@@ -42,6 +42,7 @@ public class EntityView extends RelativeLayout {
 	private RecyclerAdapter mRecyclerAdapter;
 	private LoadingView mLoading;
 	private EmptyView mEmpty;
+	private StickHeader mStickHeader;
 
 	/**
 	 * Constructor
@@ -66,11 +67,12 @@ public class EntityView extends RelativeLayout {
 
 		mRecyclerAdapter = new RecyclerAdapter(context);
 		mRecyclerView = new RecyclerView(context);
+		mStickHeader = new StickHeader(mRecyclerView, mRecyclerAdapter);
 		mRecyclerView.setAdapter(mRecyclerAdapter);
 		mRecyclerView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 		mRecyclerView.setOnScrollListener(new ScrollTopRefresh(mRefresh));
 		mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
-		mRecyclerView.addItemDecoration(new StickHeader(mRecyclerView, mRecyclerAdapter));
+		mRecyclerView.addItemDecoration(mStickHeader);
 
 		mRefresh.addView(mRecyclerView);
 
@@ -86,6 +88,10 @@ public class EntityView extends RelativeLayout {
 
 	public void setItemViewFactory(Mission<ViewType> factory) {
 		mRecyclerAdapter.setItemViewFactory(factory);
+	}
+
+	public void setHeaderFactory(Mission<DataItem> factory) {
+		mStickHeader.setHeaderFactory(factory);
 	}
 
 	public void setRefreshHandler(Runnable handler) {
