@@ -44,12 +44,14 @@ import poisondog.vfs.IFile;
  * @since 2018-02-06
  */
 public class FileView extends RelativeLayout {
-	private ListView mListView;
-	private ListAdapter mAdapter;
-	protected RefreshList mRefresh;
-	private LoadingView mLoading;
-	private EmptyView mEmpty;
+//	private ListView mListView;
+//	private ListAdapter mAdapter;
+//	protected RefreshList mRefresh;
+//	private LoadingView mLoading;
+//	private EmptyView mEmpty;
 	private Mission<IFile> mItemCreator;
+
+	private EntityView mEntityView;
 	private List<IFile> mContent;
 
 	/**
@@ -70,27 +72,31 @@ public class FileView extends RelativeLayout {
 
 	private void init(Context context) {
 		mItemCreator = new DefaultCreator();
-		mAdapter = new ListAdapter(context);
-		mRefresh = new RefreshList(context);
-		mLoading = new LoadingView(context);
-		mEmpty = new EmptyView(context);
+//		mAdapter = new ListAdapter(context);
+//		mRefresh = new RefreshList(context);
+//		mLoading = new LoadingView(context);
+//		mEmpty = new EmptyView(context);
 		mContent = new ArrayList<IFile>();
+//
+//		mListView = new ListView(context);
+//		mListView.setAdapter(mAdapter);
+//		mListView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+//		mListView.setOnScrollListener(new ScrollTopRefresh(mRefresh));
+//		mRefresh.addView(mListView);
+//		mRefresh.setHandler(new DefaultRefresh());
+//
+//		mEmpty.setContent(mRefresh);
+//		mLoading.setContent(mEmpty);
+//		addView(mLoading);
 
-		mListView = new ListView(context);
-		mListView.setAdapter(mAdapter);
-		mListView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-		mListView.setOnScrollListener(new ScrollTopRefresh(mRefresh));
-		mRefresh.addView(mListView);
-		mRefresh.setHandler(new DefaultRefresh());
-
-		mEmpty.setContent(mRefresh);
-		mLoading.setContent(mEmpty);
-		addView(mLoading);
+		mEntityView = new EntityView(getContext());
+		addView(mEntityView);
 		setLoading(false);
+		setRefreshHandler(new DefaultRefresh());
 	}
 
 	public void setRefreshHandler(Runnable handler) {
-		mRefresh.setHandler(handler);
+		mEntityView.setRefreshHandler(handler);
 	}
 
 	public void setItemCreator(Mission<IFile> creator) {
@@ -98,76 +104,89 @@ public class FileView extends RelativeLayout {
 	}
 
 	public void setLoading(boolean flag) {
-		if (flag) {
-			mAdapter.clear();
-		}
-		mLoading.setLoading(flag);
+		mEntityView.setLoading(flag);
 	}
 
 	public void setEmpty(boolean flag) {
-		mEmpty.setEmpty(flag);
+		mEntityView.setEmpty(flag);
 	}
 
 	public void setEmpty(View view) {
-		mEmpty.setEmpty(view);
+		mEntityView.setEmpty(view);
 	}
 
-	public void update(int position, IFile file) {
-		mAdapter.setItem(position, createItem(file));
+	public Mission<IFile> getItemCreator() {
+		return mItemCreator;
 	}
+
+//	// TODO 
+//	public void update(int position, IFile file) {
+//		mAdapter.setItem(position, createItem(file));
+//	}
 
 	public void remove(int index) {
-		mAdapter.removeItem(index);
+		mEntityView.remove(index);
 	}
 
-	public void update() {
-		mAdapter.notifyDataSetChanged();
-	}
+//	// TODO 
+//	public void update() {
+//		mAdapter.notifyDataSetChanged();
+//	}
 
 	public void refresh() {
-		mRefresh.onRefresh();
+		mEntityView.refresh();
 	}
 
 	public void setItems(List<DataItem> items) {
-		for (DataItem item : items) {
-			mAdapter.addItem(item);
-		}
-		setLoading(false);
-		mAdapter.notifyDataSetChanged();
+		mEntityView.setItems(items);
 	}
 
 	public void setFiles(List<IFile> datas) {
 		mContent = datas;
-		mAdapter.clear();
-		mRefresh.onRefresh();
+		mEntityView.clear();
+		mEntityView.refresh();
 	}
 
-	public void setPosition(Pair<Integer, Integer> position) {
-		mListView.setSelectionFromTop(position.getValue1(), position.getValue2());
+	public List<IFile> getContent() {
+		return mContent;
 	}
 
-	public Pair<Integer, Integer> getPosition() {
-		int index = mListView.getFirstVisiblePosition();
-		View v = getChildAt(0);
-		int top = (v == null) ? 0 : v.getTop() - getPaddingTop();
-		return new Pair<Integer, Integer>(index, top);
+//	// TODO 
+//	public void setPosition(Pair<Integer, Integer> position) {
+//		mListView.setSelectionFromTop(position.getValue1(), position.getValue2());
+//	}
+
+//	// TODO 
+//	public Pair<Integer, Integer> getPosition() {
+//		int index = mListView.getFirstVisiblePosition();
+//		View v = getChildAt(0);
+//		int top = (v == null) ? 0 : v.getTop() - getPaddingTop();
+//		return new Pair<Integer, Integer>(index, top);
+//	}
+
+	public void setOnClickListener(View.OnClickListener listener) {
+		mEntityView.setOnClickListener(listener);
 	}
 
-	public void setOnItemClickListener(AdapterView.OnItemClickListener listener) {
-		mListView.setOnItemClickListener(listener);
+	public void setOnLongClickListener(View.OnLongClickListener listener) {
+		mEntityView.setOnLongClickListener(listener);
 	}
 
-	public void setOnItemLongClickListener(AdapterView.OnItemLongClickListener listener) {
-		mListView.setOnItemLongClickListener(listener);
-	}
+//	public void setOnItemClickListener(AdapterView.OnItemClickListener listener) {
+//		mListView.setOnItemClickListener(listener);
+//	}
 
-	public DataItem createItem(IFile f) {
-		try {
-			return (DataItem) mItemCreator.execute(f);
-		} catch(Exception e) {
-		}
-		return null;
-	}
+//	public void setOnItemLongClickListener(AdapterView.OnItemLongClickListener listener) {
+//		mListView.setOnItemLongClickListener(listener);
+//	}
+
+//	public DataItem createItem(IFile f) {
+//		try {
+//			return (DataItem) mItemCreator.execute(f);
+//		} catch(Exception e) {
+//		}
+//		return null;
+//	}
 
 	class DefaultCreator implements Mission<IFile> {
 		@Override
@@ -197,7 +216,10 @@ public class FileView extends RelativeLayout {
 			Collections.sort(mContent, new NameOrder());
 			ArrayList<DataItem> result = new ArrayList<DataItem>();
 			for (IFile f : mContent) {
-				result.add(createItem(f));
+				try {
+					result.add((DataItem) mItemCreator.execute(f));
+				} catch(Exception e) {
+				}
 			}
 			setItems(result);
 		}
