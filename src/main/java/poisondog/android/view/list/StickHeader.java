@@ -28,11 +28,11 @@ import poisondog.core.NoMission;
  * @since 2019-02-21
  */
 public class StickHeader extends RecyclerView.ItemDecoration {
-	private RecycleAdapter mAdapter;
+	private RecyclerAdapter mAdapter;
 	private int mStickyHeaderHeight;
 	private Mission<DataItem> mHeaderFactory;
 
-	public StickHeader(final RecyclerView recyclerView, RecycleAdapter adapter) {
+	public StickHeader(final RecyclerView recyclerView, RecyclerAdapter adapter) {
 		mAdapter = adapter;
 		mHeaderFactory = new Mission<DataItem>() {
 			@Override

@@ -28,7 +28,7 @@ import poisondog.core.Mission;
 /**
  * @author poisondog <poisondog@gmail.com>
  */
-public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.RecycleViewHolder> {
+public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecycleViewHolder> {
 	private Context mContext;
 	private List<DataItem> mItems;
 	private ImageFetcher mFetcher;
@@ -39,7 +39,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.RecycleV
 	/**
 	 * Constructor
 	 */
-	public RecycleAdapter(Context context) {
+	public RecyclerAdapter(Context context) {
 		super();
 		mContext = context;
 		mItems = new ArrayList<DataItem>();
@@ -55,7 +55,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.RecycleV
 	/**
 	 * Constructor
 	 */
-	public RecycleAdapter(Context context, List<DataItem> items) {
+	public RecyclerAdapter(Context context, List<DataItem> items) {
 		this(context);
 		mItems = items;
 	}

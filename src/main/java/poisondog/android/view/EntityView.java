@@ -25,7 +25,7 @@ import android.widget.RelativeLayout;
 import java.util.List;
 import poisondog.android.mission.ScrollTopRefresh;
 import poisondog.android.view.list.DataItem;
-import poisondog.android.view.list.RecycleAdapter;
+import poisondog.android.view.list.RecyclerAdapter;
 import poisondog.android.view.list.StickHeader;
 import poisondog.android.view.list.ViewType;
 import poisondog.android.view.LoadingView;
@@ -39,7 +39,7 @@ import poisondog.core.Mission;
 public class EntityView extends RelativeLayout {
 	protected RefreshList mRefresh;
 	private RecyclerView mRecyclerView;
-	private RecycleAdapter mRecyclerAdapter;
+	private RecyclerAdapter mRecyclerAdapter;
 	private LoadingView mLoading;
 	private EmptyView mEmpty;
 
@@ -64,7 +64,7 @@ public class EntityView extends RelativeLayout {
 		mLoading = new LoadingView(context);
 		mEmpty = new EmptyView(context);
 
-		mRecyclerAdapter = new RecycleAdapter(context);
+		mRecyclerAdapter = new RecyclerAdapter(context);
 		mRecyclerView = new RecyclerView(context);
 		mRecyclerView.setAdapter(mRecyclerAdapter);
 		mRecyclerView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
