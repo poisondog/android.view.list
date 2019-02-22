@@ -16,6 +16,9 @@ import poisondog.android.view.list.app.R;
 import poisondog.android.view.list.DataItem;
 import poisondog.android.view.list.ItemView;
 import poisondog.android.view.list.SimpleItem;
+import poisondog.android.view.list.GridItemView;
+import poisondog.android.view.list.HeaderItemView;
+import poisondog.android.view.list.ViewType;
 import poisondog.core.Mission;
 import poisondog.format.SizeFormatUtils;
 import poisondog.format.TimeFormatUtils;
@@ -41,6 +44,7 @@ public class MainActivity extends Activity {
 		LinearLayout root = (LinearLayout) findViewById(R.id.root);
 //		mRoot = new FileView(this);
 		mRoot = new EntityView(this);
+		mRoot.setItemViewFactory(new MyItemViewFactory());
 		GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
 		layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
 			@Override
@@ -136,4 +140,12 @@ public class MainActivity extends Activity {
 		}
 	}
 
+	class MyItemViewFactory implements Mission<ViewType> {
+		@Override
+		public ItemView execute(ViewType viewType) {
+			if (viewType == ViewType.Header)
+				return new HeaderItemView(MainActivity.this);
+			return new GridItemView(MainActivity.this);
+		}
+	}
 }

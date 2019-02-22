@@ -16,33 +16,21 @@
 package poisondog.android.view;
 
 import android.content.Context;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import poisondog.android.mission.ScrollTopRefresh;
-import poisondog.android.view.list.ListAdapter;
 import poisondog.android.view.list.DataItem;
-import poisondog.android.view.list.R;
 import poisondog.android.view.list.RecycleAdapter;
-import poisondog.android.view.list.SimpleItem;
 import poisondog.android.view.list.StickHeader;
+import poisondog.android.view.list.ViewType;
 import poisondog.android.view.LoadingView;
 import poisondog.android.view.RefreshList;
 import poisondog.core.Mission;
-import poisondog.net.URLUtils;
-import poisondog.util.Pair;
-import poisondog.util.TimeUtils;
-import poisondog.vfs.comparator.NameOrder;
-import poisondog.vfs.IFile;
 
 /**
  * @author Adam Huang
@@ -96,7 +84,7 @@ public class EntityView extends RelativeLayout {
 		mRecyclerView.setLayoutManager(manager);
 	}
 
-	public void setItemViewFactory(Mission<Integer> factory) {
+	public void setItemViewFactory(Mission<ViewType> factory) {
 		mRecyclerAdapter.setItemViewFactory(factory);
 	}
 

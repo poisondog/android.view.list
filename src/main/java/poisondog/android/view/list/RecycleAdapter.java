@@ -32,7 +32,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.RecycleV
 	private Context mContext;
 	private List<DataItem> mItems;
 	private ImageFetcher mFetcher;
-	private Mission<Integer> mItemViewFactor;
+	private Mission<ViewType> mItemViewFactor;
 	private View.OnClickListener mOnClickListener;
 	private View.OnLongClickListener mOnLongClickListener;
 
@@ -93,7 +93,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.RecycleV
 		return mItems.get(position);
 	}
 
-	public void setItemViewFactory(Mission<Integer> factory) {
+	public void setItemViewFactory(Mission<ViewType> factory) {
 		mItemViewFactor = factory;
 	}
 
@@ -113,7 +113,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.RecycleV
 	@Override
 	public RecycleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 		try {
-			View view = (View) mItemViewFactor.execute(viewType);
+			View view = (View) mItemViewFactor.execute(ViewType.values()[viewType]);
 			view.setOnClickListener(mOnClickListener);
 			view.setOnLongClickListener(mOnLongClickListener);
 			return new RecycleViewHolder((ItemView) view);
@@ -177,12 +177,12 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.RecycleV
 		}
 	}
 
-	class DefaultItemViewFactory implements Mission<Integer> {
+	class DefaultItemViewFactory implements Mission<ViewType> {
 		@Override
-		public ItemView execute(Integer viewType) {
-			if (ViewType.values()[viewType] == ViewType.Header)
+		public ItemView execute(ViewType viewType) {
+			if (viewType == ViewType.Header)
 				return new HeaderItemView(mContext);
-			return new GridItemView(mContext);
+			return new ListItemView(mContext);
 		}
 	}
 
