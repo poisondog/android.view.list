@@ -125,7 +125,10 @@ public class FileView extends RelativeLayout {
 //	}
 
 	public void setFile(int position, IFile file) {
-		mEntityView.setItem(position, (DataItem) getItemCreator().execute(file));
+		try {
+			mEntityView.setItem(position, (DataItem) getItemCreator().execute(file));
+		} catch(Exception e) {
+		}
 	}
 
 	public void remove(int index) {
