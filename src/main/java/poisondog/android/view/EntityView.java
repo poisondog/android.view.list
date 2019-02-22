@@ -70,7 +70,7 @@ public class EntityView extends RelativeLayout {
 		mStickHeader = new StickHeader(mRecyclerView, mRecyclerAdapter);
 		mRecyclerView.setAdapter(mRecyclerAdapter);
 		mRecyclerView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-		mRecyclerView.setOnScrollListener(new ScrollTopRefresh(mRefresh));
+//		mRecyclerView.setOnScrollListener(new ScrollTopRefresh(mRefresh));
 		mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
 		mRecyclerView.addItemDecoration(mStickHeader);
 
