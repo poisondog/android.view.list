@@ -45,8 +45,8 @@ import poisondog.vfs.IFile;
  */
 public class FileView extends RelativeLayout {
 	private ListView mListView;
-	protected RefreshList mRefresh;
 	private ListAdapter mAdapter;
+	protected RefreshList mRefresh;
 	private LoadingView mLoading;
 	private EmptyView mEmpty;
 	private Mission<IFile> mItemCreator;

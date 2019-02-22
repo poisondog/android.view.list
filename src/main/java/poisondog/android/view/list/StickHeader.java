@@ -15,15 +15,16 @@
  */
 package poisondog.android.view.list;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import poisondog.core.Mission;
-import poisondog.core.NoMission;
 
 /**
+ * reference from https://stackoverflow.com/questions/32949971/how-can-i-make-sticky-headers-in-recyclerview-without-external-lib
  * @author Adam Huang
  * @since 2019-02-21
  */
@@ -32,18 +33,9 @@ public class StickHeader extends RecyclerView.ItemDecoration {
 	private int mStickyHeaderHeight;
 	private Mission<DataItem> mHeaderFactory;
 
-	public StickHeader(final RecyclerView recyclerView, RecyclerAdapter adapter) {
+	public StickHeader(RecyclerView recyclerView, RecyclerAdapter adapter) {
 		mAdapter = adapter;
-		mHeaderFactory = new Mission<DataItem>() {
-			@Override
-			public View execute(DataItem item) {
-				HeaderItemView result = new HeaderItemView(recyclerView.getContext());
-				result.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-				result.setData(item.getData());
-				result.getTitle().setText(item.getTitle());
-				return result;
-			}
-		};
+		mHeaderFactory = new DefaultHeaderFactory(recyclerView.getContext());
 
 		// On Sticky Header Click
 		recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
@@ -74,6 +66,10 @@ public class StickHeader extends RecyclerView.ItemDecoration {
 		}
 
 		View currentHeader = getHeaderViewForItem(topChildPosition, parent);
+		if (currentHeader == null) {
+			return;
+		}
+
 		fixLayoutSize(parent, currentHeader);
 		int contactPoint = currentHeader.getBottom();
 		View childInContact = getChildInContact(parent, contactPoint);
@@ -91,6 +87,8 @@ public class StickHeader extends RecyclerView.ItemDecoration {
 
 	private View getHeaderViewForItem(int itemPosition, RecyclerView parent) {
 		int headerPosition = getHeaderPosition(itemPosition);
+		if (headerPosition < 0)
+			return null;
 		try {
 			return (View) mHeaderFactory.execute(mAdapter.getItem(headerPosition));
 		} catch(Exception e) {
@@ -147,15 +145,13 @@ public class StickHeader extends RecyclerView.ItemDecoration {
 	}
 
 	private int getHeaderPosition(int itemPosition) {
-		int headerPosition = 0;
 		do {
 			if (isHeader(itemPosition)) {
-				headerPosition = itemPosition;
-				break;
+				return itemPosition;
 			}
 			itemPosition -= 1;
 		} while (itemPosition >= 0);
-		return headerPosition;
+		return -1;
 	}
 
 	private boolean isHeader(int itemPosition) {
@@ -164,6 +160,21 @@ public class StickHeader extends RecyclerView.ItemDecoration {
 
 	public void setHeaderFactory(Mission<DataItem> factory) {
 		mHeaderFactory = factory;
+	}
+
+	class DefaultHeaderFactory implements Mission<DataItem> {
+		private Context mContext;
+		public DefaultHeaderFactory(Context context) {
+			mContext = context;
+		}
+		@Override
+		public View execute(DataItem item) {
+			HeaderItemView result = new HeaderItemView(mContext);
+			result.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+			result.setData(item.getData());
+			result.getTitle().setText(item.getTitle());
+			return result;
+		}
 	}
 
 }
