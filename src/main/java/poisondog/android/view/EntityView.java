@@ -122,6 +122,14 @@ public class EntityView extends RelativeLayout {
 		mRefresh.onRefresh();
 	}
 
+	public void notifyDataSetChanged() {
+		mRecyclerAdapter.notifyDataSetChanged();
+	}
+
+	public void setItem(int index, DataItem item) {
+		mRecyclerAdapter.setItem(index, item);
+	}
+
 	public void setItems(List<DataItem> items) {
 		mRecyclerAdapter.setItems(items);
 		setLoading(false);

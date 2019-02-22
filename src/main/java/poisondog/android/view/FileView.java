@@ -124,14 +124,17 @@ public class FileView extends RelativeLayout {
 //		mAdapter.setItem(position, createItem(file));
 //	}
 
+	public void setFile(int position, IFile file) {
+		mEntityView.setItem(position, (DataItem) getItemCreator().execute(file));
+	}
+
 	public void remove(int index) {
 		mEntityView.remove(index);
 	}
 
-//	// TODO 
-//	public void update() {
-//		mAdapter.notifyDataSetChanged();
-//	}
+	public void notifyDataSetChanged() {
+		mEntityView.notifyDataSetChanged();
+	}
 
 	public void refresh() {
 		mEntityView.refresh();
