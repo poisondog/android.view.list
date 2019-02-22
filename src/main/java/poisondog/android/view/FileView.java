@@ -213,11 +213,11 @@ public class FileView extends RelativeLayout {
 		@Override
 		public void run() {
 			setLoading(true);
-			Collections.sort(mContent, new NameOrder());
+			Collections.sort(getContent(), new NameOrder());
 			ArrayList<DataItem> result = new ArrayList<DataItem>();
-			for (IFile f : mContent) {
+			for (IFile f : getContent()) {
 				try {
-					result.add((DataItem) mItemCreator.execute(f));
+					result.add((DataItem) getItemCreator().execute(f));
 				} catch(Exception e) {
 				}
 			}
