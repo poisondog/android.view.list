@@ -85,6 +85,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 		notifyDataSetChanged();
 	}
 
+	public void remove(DataItem item) {
+		mItems.remove(item);
+		notifyDataSetChanged();
+	}
+
 	public List<DataItem> getItems() {
 		return mItems;
 	}

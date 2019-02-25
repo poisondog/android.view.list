@@ -110,6 +110,10 @@ public class EntityView extends RelativeLayout {
 		mEmpty.setEmpty(flag);
 	}
 
+	public void setProgressBar(View view) {
+		mLoading.setProgressBar(view);
+	}
+
 	public void setEmpty(View view) {
 		mEmpty.setEmpty(view);
 	}

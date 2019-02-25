@@ -111,6 +111,10 @@ public class FileView extends RelativeLayout {
 		mEntityView.setEmpty(flag);
 	}
 
+	public void setProgressBar(View view) {
+		mEntityView.setProgressBar(view);
+	}
+
 	public void setEmpty(View view) {
 		mEntityView.setEmpty(view);
 	}
