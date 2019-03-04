@@ -80,7 +80,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 		notifyDataSetChanged();
 	}
 
-	public void removeItem(int index) {
+	public void remove(int index) {
 		mItems.remove(index);
 		notifyDataSetChanged();
 	}

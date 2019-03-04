@@ -119,7 +119,11 @@ public class EntityView extends RelativeLayout {
 	}
 
 	public void remove(int index) {
-		mRecyclerAdapter.removeItem(index);
+		mRecyclerAdapter.remove(index);
+	}
+
+	public void remove(DataItem item) {
+		mRecyclerAdapter.remove(item);
 	}
 
 	public void refresh() {

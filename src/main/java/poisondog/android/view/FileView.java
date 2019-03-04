@@ -139,6 +139,10 @@ public class FileView extends RelativeLayout {
 		mEntityView.remove(index);
 	}
 
+	public void remove(DataItem item) {
+		mEntityView.remove(item);
+	}
+
 	public void notifyDataSetChanged() {
 		mEntityView.notifyDataSetChanged();
 	}
