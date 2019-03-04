@@ -171,7 +171,7 @@ public class StickHeader extends RecyclerView.ItemDecoration {
 		public View execute(DataItem item) {
 			HeaderItemView result = new HeaderItemView(mContext);
 			result.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-			result.setData(item.getData());
+			result.setItem(item);
 			result.getTitle().setText(item.getTitle());
 			return result;
 		}

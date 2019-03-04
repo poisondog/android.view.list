@@ -132,7 +132,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 	public void onBindViewHolder(RecycleViewHolder holder, int position) {
 		ItemView row = holder.getItemView();
 		DataItem obj = getItem(position);
-		row.setData(obj.getData());
+		row.setItem(obj);
 		row.getTitle().setText(obj.getTitle());
 		if (obj.getSubtitle() == null)
 			row.getSubtitle().setVisibility(View.GONE);

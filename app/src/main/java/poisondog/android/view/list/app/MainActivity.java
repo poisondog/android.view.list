@@ -76,7 +76,7 @@ public class MainActivity extends Activity {
 				public void onClick(View v) {
 					ItemView target = (ItemView) v;
 					try {
-						System.out.println(URLUtils.file(((IData)target.getData()).getUrl()));
+						System.out.println(URLUtils.file(((IData)target.getItem().getData()).getUrl()));
 					} catch(Exception e) {
 					}
 				}
@@ -86,7 +86,7 @@ public class MainActivity extends Activity {
 				public boolean onLongClick(View v) {
 					ItemView target = (ItemView) v;
 					try {
-						System.out.println(((IData)target.getData()).getUrl());
+						System.out.println(((IData)target.getItem().getData()).getUrl());
 					} catch(Exception e) {
 					}
 					return true;

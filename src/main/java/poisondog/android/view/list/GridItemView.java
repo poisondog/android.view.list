@@ -34,7 +34,7 @@ public class GridItemView extends RelativeLayout implements ItemView {
 	private TextView mComment;
 	private TextView mHide;
 	private ProgressBar mProgress;
-	private Object mData;
+	private DataItem mItem;
 
 	/**
 	 * Constructor
@@ -107,12 +107,12 @@ public class GridItemView extends RelativeLayout implements ItemView {
 	}
 
 	@Override
-	public void setData(Object data) {
-		mData = data;
+	public void setItem(DataItem item) {
+		mItem = item;
 	}
 
 	@Override
-	public Object getData() {
-		return mData;
+	public DataItem getItem() {
+		return mItem;
 	}
 }

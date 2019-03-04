@@ -20,7 +20,7 @@ repositories {
 }
 
 project.group = 'poisondog'
-project.version = '2.2.0'
+project.version = '3.0.0'
 
 android {
 	compileSdkVersion 24
