@@ -151,8 +151,8 @@ public class EntityView extends RelativeLayout {
 		mRecyclerAdapter.setOnLongClickListener(listener);
 	}
 
-	public int getItemViewType(int position) {
-		return mRecyclerAdapter.getItemViewType(position);
+	public ViewType getItemViewType(int position) {
+		return mRecyclerAdapter.getItem(position).getType();
 	}
 
 }
