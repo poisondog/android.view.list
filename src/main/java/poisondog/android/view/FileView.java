@@ -16,22 +16,17 @@
 package poisondog.android.view;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import poisondog.android.mission.ScrollTopRefresh;
-import poisondog.android.view.list.ListAdapter;
 import poisondog.android.view.list.DataItem;
 import poisondog.android.view.list.R;
 import poisondog.android.view.list.SimpleItem;
-import poisondog.android.view.LoadingView;
-import poisondog.android.view.RefreshList;
+import poisondog.android.view.list.ViewType;
 import poisondog.core.Mission;
 import poisondog.net.URLUtils;
 import poisondog.util.Pair;
@@ -44,13 +39,7 @@ import poisondog.vfs.IFile;
  * @since 2018-02-06
  */
 public class FileView extends RelativeLayout {
-//	private ListView mListView;
-//	private ListAdapter mAdapter;
-//	protected RefreshList mRefresh;
-//	private LoadingView mLoading;
-//	private EmptyView mEmpty;
 	private Mission<IFile> mItemCreator;
-
 	private EntityView mEntityView;
 	private List<IFile> mContent;
 
@@ -72,23 +61,7 @@ public class FileView extends RelativeLayout {
 
 	private void init(Context context) {
 		mItemCreator = new DefaultCreator();
-//		mAdapter = new ListAdapter(context);
-//		mRefresh = new RefreshList(context);
-//		mLoading = new LoadingView(context);
-//		mEmpty = new EmptyView(context);
 		mContent = new ArrayList<IFile>();
-//
-//		mListView = new ListView(context);
-//		mListView.setAdapter(mAdapter);
-//		mListView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-//		mListView.setOnScrollListener(new ScrollTopRefresh(mRefresh));
-//		mRefresh.addView(mListView);
-//		mRefresh.setHandler(new DefaultRefresh());
-//
-//		mEmpty.setContent(mRefresh);
-//		mLoading.setContent(mEmpty);
-//		addView(mLoading);
-
 		mEntityView = new EntityView(getContext());
 		addView(mEntityView);
 		setLoading(false);
@@ -101,6 +74,14 @@ public class FileView extends RelativeLayout {
 
 	public void setItemCreator(Mission<IFile> creator) {
 		mItemCreator = creator;
+	}
+
+	public void setLayoutManager(RecyclerView.LayoutManager manager) {
+		mEntityView.setLayoutManager(manager);
+	}
+
+	public void setItemViewFactory(Mission<ViewType> factory) {
+		mEntityView.setItemViewFactory(factory);
 	}
 
 	public void setLoading(boolean flag) {
@@ -185,22 +166,6 @@ public class FileView extends RelativeLayout {
 	public void setOnLongClickListener(View.OnLongClickListener listener) {
 		mEntityView.setOnLongClickListener(listener);
 	}
-
-//	public void setOnItemClickListener(AdapterView.OnItemClickListener listener) {
-//		mListView.setOnItemClickListener(listener);
-//	}
-
-//	public void setOnItemLongClickListener(AdapterView.OnItemLongClickListener listener) {
-//		mListView.setOnItemLongClickListener(listener);
-//	}
-
-//	public DataItem createItem(IFile f) {
-//		try {
-//			return (DataItem) mItemCreator.execute(f);
-//		} catch(Exception e) {
-//		}
-//		return null;
-//	}
 
 	class DefaultCreator implements Mission<IFile> {
 		@Override
