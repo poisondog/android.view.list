@@ -100,6 +100,10 @@ public class FileView extends RelativeLayout {
 		mEntityView.setEmpty(view);
 	}
 
+	public void setItemViewCacheSize(int size) {
+		mEntityView.setItemViewCacheSize(size);
+	}
+
 	public Mission<IFile> getItemCreator() {
 		return mItemCreator;
 	}

@@ -82,6 +82,10 @@ public class EntityView extends RelativeLayout {
 		setLoading(false);
 	}
 
+	public void setItemViewCacheSize(int size) {
+		mRecyclerView.setItemViewCacheSize(size);
+	}
+
 	public void setLayoutManager(RecyclerView.LayoutManager manager) {
 		mRecyclerView.setLayoutManager(manager);
 	}
