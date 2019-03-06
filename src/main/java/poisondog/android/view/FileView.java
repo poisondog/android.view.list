@@ -104,6 +104,10 @@ public class FileView extends RelativeLayout {
 		return mItemCreator;
 	}
 
+	public int getItemViewType(int position) {
+		return mEntityView.getItemViewType(position);
+	}
+
 //	// TODO 
 //	public void update(int position, IFile file) {
 //		mAdapter.setItem(position, createItem(file));
