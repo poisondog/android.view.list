@@ -30,6 +30,7 @@ public interface ItemView {
 	public TextView getSubtitle();
 	public TextView getComment();
 	public ProgressBar getProgress();
-	public void setItem(DataItem item);
 	public DataItem getItem();
+	public void setItem(DataItem item);
+	public void setLayout(int resourceID);
 }

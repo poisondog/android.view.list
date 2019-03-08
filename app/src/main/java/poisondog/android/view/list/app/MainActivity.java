@@ -5,19 +5,21 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.LinearLayout;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import poisondog.android.view.FileView;
 import poisondog.android.view.EntityView;
+import poisondog.android.view.FileView;
 import poisondog.android.view.list.app.R;
 import poisondog.android.view.list.DataItem;
-import poisondog.android.view.list.ItemView;
-import poisondog.android.view.list.SimpleItem;
 import poisondog.android.view.list.GridItemView;
 import poisondog.android.view.list.HeaderItemView;
+import poisondog.android.view.list.ItemView;
+import poisondog.android.view.list.ListItemView;
+import poisondog.android.view.list.SimpleItem;
 import poisondog.android.view.list.ViewType;
 import poisondog.core.Mission;
 import poisondog.format.SizeFormatUtils;
@@ -44,22 +46,8 @@ public class MainActivity extends Activity {
 		LinearLayout root = (LinearLayout) findViewById(R.id.root);
 //		mRoot = new FileView(this);
 		mRoot = new EntityView(this);
-		mRoot.setItemViewFactory(new MyItemViewFactory());
-		GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
-		layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-			@Override
-			public int getSpanSize(int position) {
-				switch (mRoot.getItemViewType(position)) {
-					case 0:
-						return 1;
-					case 1:
-						return 2;
-					default:
-						return 1;
-				}
-			}
-		});
-		mRoot.setLayoutManager(layoutManager);
+//		mRoot.setItemViewFactory(new MyItemViewFactory());
+		mRoot.setLayoutManager(new LinearLayoutManager(this));
 		mRoot.setRefreshHandler(new RefreshData());
 		String download = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + "/";
 		try {
@@ -68,9 +56,6 @@ public class MainActivity extends Activity {
 			filter.setIncludeRule(new OnlyImage());
 			mContent = new ArrayList<IFile>(filter.execute(mFolder.getChildren()));
 			mRoot.refresh();
-//			mRoot.setFiles(mContent);
-
-//			mRoot.setItemCreator(new PhotoCreator());
 			mRoot.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -84,11 +69,31 @@ public class MainActivity extends Activity {
 			mRoot.setOnLongClickListener(new View.OnLongClickListener() {
 				@Override
 				public boolean onLongClick(View v) {
-					ItemView target = (ItemView) v;
-					try {
-						System.out.println(((IData)target.getItem().getData()).getUrl());
-					} catch(Exception e) {
+
+					GridLayoutManager layoutManager = new GridLayoutManager(MainActivity.this, 2);
+					layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+						@Override
+						public int getSpanSize(int position) {
+							if (mRoot.getItemViewType(position) == ViewType.Header)
+								return 2;
+							return 1;
+						}
+					});
+					mRoot.setLayoutManager(layoutManager);
+
+					GridCreator mCreator = new GridCreator();
+					ArrayList<DataItem> result = new ArrayList<DataItem>();
+					result.add(SimpleItem.header("Head", "second", "third"));
+					for (IFile f : mContent) {
+						try {
+							result.add(mCreator.execute(f));
+						} catch(Exception e) {
+						}
+						if (Math.random() < 0.1)
+							result.add(SimpleItem.header("first", "second", "third"));
 					}
+					mRoot.setItems(result);
+
 					return true;
 				}
 			});
@@ -107,6 +112,21 @@ public class MainActivity extends Activity {
 			String time = TimeFormatUtils.toString(f.getLastModifiedTime());
 			String size = SizeFormatUtils.toString(data.getSize());
 			SimpleItem item = new SimpleItem(filename, time, size);
+			item.setDefaultImage(R.drawable.file_txt);
+			item.setData(data);
+			item.setImage(data.getUrl());
+			return item;
+		}
+	}
+
+	class GridCreator implements Mission<IFile> {
+		@Override
+		public DataItem execute(IFile f) throws Exception {
+			IData data = (IData)f;
+			String filename = URLUtils.file(f.getUrl());
+			String time = TimeFormatUtils.toString(f.getLastModifiedTime());
+			String size = SizeFormatUtils.toString(data.getSize());
+			SimpleItem item = SimpleItem.layout(filename, time, size, R.layout.image_grid_item);
 			item.setDefaultImage(R.drawable.file_txt);
 			item.setData(data);
 			item.setImage(data.getUrl());
@@ -140,12 +160,16 @@ public class MainActivity extends Activity {
 		}
 	}
 
-	class MyItemViewFactory implements Mission<ViewType> {
-		@Override
-		public ItemView execute(ViewType viewType) {
-			if (viewType == ViewType.Header)
-				return new HeaderItemView(MainActivity.this);
-			return new GridItemView(MainActivity.this);
-		}
-	}
+//	class MyItemViewFactory implements Mission<Integer> {
+//		@Override
+//		public ItemView execute(Integer viewType) {
+//			ListItemView item = new ListItemView(MainActivity.this);
+//			item.setLayout(viewType);
+//			return item;
+////			if (viewType == ViewType.Header)
+////				return new HeaderItemView(MainActivity.this);
+////			return new GridItemView(MainActivity.this);
+//		}
+//	}
+
 }

@@ -17,19 +17,16 @@ package poisondog.android.view.list;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 /**
  * @author Adam Huang
  * @since 2017-12-28
  */
-public class HeaderItemView extends LinearLayout implements ItemView {
-	private View mRoot;
+public class ComplexItemView extends RelativeLayout implements ItemView {
 	private ImageView mImage;
 	private ImageView mState;
 	private TextView mTitle;
@@ -42,38 +39,35 @@ public class HeaderItemView extends LinearLayout implements ItemView {
 	/**
 	 * Constructor
 	 */
-	public HeaderItemView(Context context) {
+	public ComplexItemView(Context context) {
 		super(context);
-		init(context);
 	}
 
 	/**
 	 * Constructor
 	 */
-	public HeaderItemView(Context context, AttributeSet attribute) {
+	public ComplexItemView(Context context, AttributeSet attribute) {
 		super(context, attribute);
-		init(context);
 	}
 
 	/**
 	 * Constructor
 	 */
-	public HeaderItemView(Context context, AttributeSet attribute, int style) {
+	public ComplexItemView(Context context, AttributeSet attribute, int style) {
 		super(context, attribute, style);
-		init(context);
 	}
 
-	private void init(Context context) {
-		LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		mRoot = inflater.inflate(R.layout.header_item, null, false);
-		mImage = (ImageView) mRoot.findViewById(R.id.image);
-		mState = (ImageView) mRoot.findViewById(R.id.state);
-		mHide = (TextView) mRoot.findViewById(R.id.hide);
-		mTitle = (TextView) mRoot.findViewById(R.id.title);
-		mSubtitle = (TextView) mRoot.findViewById(R.id.subtitle);
-		mComment = (TextView) mRoot.findViewById(R.id.comment);
-		mProgress = (ProgressBar) mRoot.findViewById(R.id.progress);
-		addView(mRoot);
+	@Override
+	public void setLayout(int resourceID) {
+		inflate(getContext(), resourceID, this);
+		mImage = (ImageView) findViewById(R.id.image);
+		mState = (ImageView) findViewById(R.id.state);
+		mHide = (TextView) findViewById(R.id.hide);
+		mTitle = (TextView) findViewById(R.id.title);
+		mSubtitle = (TextView) findViewById(R.id.subtitle);
+		mComment = (TextView) findViewById(R.id.comment);
+		mProgress = (ProgressBar) findViewById(R.id.progress);
+//		setPadding(5, 5, 5, 5);
 	}
 
 	@Override

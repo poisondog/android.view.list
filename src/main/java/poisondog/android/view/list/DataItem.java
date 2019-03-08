@@ -27,6 +27,7 @@ public interface DataItem {
 	public String getState();
 	public Object getData();
 	public int getDefaultImage();
+	public int getLayout();
 	public void setData(Object object);
 	public ViewType getType();
 }

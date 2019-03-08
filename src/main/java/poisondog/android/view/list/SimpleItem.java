@@ -28,6 +28,7 @@ public class SimpleItem implements DataItem {
 	private String mImage;
 	private String mState;
 	private int mResource;
+	private int mLayout;
 	private Object mData;
 	private ViewType mType = ViewType.Data;
 
@@ -35,7 +36,7 @@ public class SimpleItem implements DataItem {
 	 * Constructor
 	 */
 	public SimpleItem(String title) {
-		mTitle = title;
+		this(title, null, null);
 	}
 
 	/**
@@ -45,12 +46,23 @@ public class SimpleItem implements DataItem {
 		mTitle = title;
 		mSubtitle = subtitle;
 		mComment = comment;
+		mLayout = R.layout.image_list_item;
 	}
 
 	public static SimpleItem header(String title, String subtitle, String comment) {
+		SimpleItem result = layout(title, subtitle, comment, R.layout.header_item);
+		result.setType(ViewType.Header);
+		return result;
+	}
+
+	public static SimpleItem layout(String title, String subtitle, String comment, int layout) {
 		SimpleItem item = new SimpleItem(title, subtitle, comment);
-		item.setType(ViewType.Header);
+		item.setLayout(layout);
 		return item;
+	}
+
+	public int getLayout() {
+		return mLayout;
 	}
 
 	public String getTitle() {
@@ -100,5 +112,8 @@ public class SimpleItem implements DataItem {
 	}
 	public void setType(ViewType type) {
 		mType = type;
+	}
+	public void setLayout(int layout) {
+		mLayout = layout;
 	}
 }

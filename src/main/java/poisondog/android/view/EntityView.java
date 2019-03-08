@@ -90,7 +90,7 @@ public class EntityView extends RelativeLayout {
 		mRecyclerView.setLayoutManager(manager);
 	}
 
-	public void setItemViewFactory(Mission<ViewType> factory) {
+	public void setItemViewFactory(Mission<Integer> factory) {
 		mRecyclerAdapter.setItemViewFactory(factory);
 	}
 

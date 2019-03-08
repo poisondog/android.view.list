@@ -32,7 +32,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 	private Context mContext;
 	private List<DataItem> mItems;
 	private ImageFetcher mFetcher;
-	private Mission<ViewType> mItemViewFactor;
+	private Mission<Integer> mItemViewFactor;
 	private View.OnClickListener mOnClickListener;
 	private View.OnLongClickListener mOnLongClickListener;
 
@@ -98,7 +98,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 		return mItems.get(position);
 	}
 
-	public void setItemViewFactory(Mission<ViewType> factory) {
+	public void setItemViewFactory(Mission<Integer> factory) {
 		mItemViewFactor = factory;
 	}
 
@@ -112,16 +112,16 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
 	@Override
 	public int getItemViewType(int position) {
-		return getItem(position).getType().ordinal();
+		return getItem(position).getLayout();
 	}
 
 	@Override
 	public RecycleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 		try {
-			View view = (View) mItemViewFactor.execute(ViewType.values()[viewType]);
+			View view = (View) mItemViewFactor.execute(viewType);
 			view.setOnClickListener(mOnClickListener);
 			view.setOnLongClickListener(mOnLongClickListener);
-			return new RecycleViewHolder((ItemView) view);
+			return new RecycleViewHolder(view);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -132,6 +132,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 	public void onBindViewHolder(RecycleViewHolder holder, int position) {
 		ItemView row = holder.getItemView();
 		DataItem obj = getItem(position);
+//		row.setLayout(obj.getLayout());
 		row.setItem(obj);
 		row.getTitle().setText(obj.getTitle());
 		if (obj.getSubtitle() == null)
@@ -172,9 +173,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 		/**
 		 * Constructor
 		 */
-		public RecycleViewHolder(ItemView v) {
-			super((View)v);
-			mView = v;
+		public RecycleViewHolder(View v) {
+			super(v);
+			mView = (ItemView) v;
 		}
 
 		public ItemView getItemView() {
@@ -182,12 +183,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 		}
 	}
 
-	class DefaultItemViewFactory implements Mission<ViewType> {
+	class DefaultItemViewFactory implements Mission<Integer> {
 		@Override
-		public ItemView execute(ViewType viewType) {
-			if (viewType == ViewType.Header)
-				return new HeaderItemView(mContext);
-			return new ListItemView(mContext);
+		public ItemView execute(Integer viewType) {
+			ComplexItemView item = new ComplexItemView(mContext);
+			item.setLayout(viewType);
+			return item;
 		}
 	}
 
