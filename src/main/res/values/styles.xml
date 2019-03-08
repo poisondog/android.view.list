@@ -1,25 +1,2 @@
 <resources>
-	<style name="WhiteTheme">
-		<item name="ListViewTitleStyle">@style/ListViewTitleStyle</item>
-		<item name="ListViewSubtitleStyle">@style/ListViewSubtitleStyle</item>
-		<item name="ListViewCommentStyle">@style/ListViewCommentStyle</item>
-		<item name="ListViewItemBackground">@style/ListViewItemBackground</item>
-	</style>
-	<style name="ListViewTitleStyle">
-		<item name="android:textSize">20sp</item>
-		<item name="android:textColor">@color/black</item>
-		<item name="android:textStyle">bold</item>
-		<item name="android:paddingRight">5dp</item>
-	</style>
-	<style name="ListViewSubtitleStyle">
-		<item name="android:textSize">15sp</item>
-		<item name="android:textColor">@color/silvergray</item>
-	</style>
-	<style name="ListViewCommentStyle">
-		<item name="android:textSize">15sp</item>
-		<item name="android:textColor">@color/littlegreen</item>
-		<item name="android:paddingRight">5dp</item>
-	</style>
-	<style name="ListViewItemBackground">
-	</style>
 </resources>

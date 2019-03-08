@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<attr name="ListViewTitleStyle" format="reference"/>
-	<attr name="ListViewSubtitleStyle" format="reference"/>
-	<attr name="ListViewCommentStyle" format="reference"/>
-	<attr name="ListViewItemBackground" format="reference"/>
-	<attr name="GridViewBackground" format="reference"/>
 	<attr name="HeaderBackground" format="reference"/>
+	<attr name="HeaderTitle" format="reference"/>
+	<attr name="HeaderSubtitle" format="reference"/>
+	<attr name="HeaderComment" format="reference"/>
+	<attr name="GridBackground" format="reference"/>
+	<attr name="GridTitle" format="reference"/>
+	<attr name="GridSubtitle" format="reference"/>
+	<attr name="GridComment" format="reference"/>
+	<attr name="ListBackground" format="reference"/>
+	<attr name="ListTitle" format="reference"/>
+	<attr name="ListSubtitle" format="reference"/>
+	<attr name="ListComment" format="reference"/>
 </resources>
