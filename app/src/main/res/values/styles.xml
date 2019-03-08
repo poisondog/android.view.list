@@ -1,16 +1,9 @@
 <resources>
-	<!-- Base application theme. -->
-	<style name="titleStyle">
-		<item name="android:textSize">20sp</item>
-		<item name="android:textColor">@color/titleColor</item>
-		<item name="android:textStyle">bold</item>
+	<style name="CoolTheme" parent="style/Theme.AppCompat.Light.NoActionBar">
+		<item name="HeaderBackground">@style/YellowBackground</item>
 	</style>
-	<style name="subtitleStyle">
-		<item name="android:textSize">15sp</item>
-		<item name="android:textColor">@color/subtitleColor</item>
-	</style>
-	<style name="commentStyle">
-		<item name="android:textSize">15sp</item>
-		<item name="android:textColor">@color/commentColor</item>
+
+	<style name="YellowBackground">
+		<item name="android:background">@color/yellow</item>
 	</style>
 </resources>

@@ -15,8 +15,6 @@ import poisondog.android.view.EntityView;
 import poisondog.android.view.FileView;
 import poisondog.android.view.list.app.R;
 import poisondog.android.view.list.DataItem;
-import poisondog.android.view.list.GridItemView;
-import poisondog.android.view.list.HeaderItemView;
 import poisondog.android.view.list.ItemView;
 import poisondog.android.view.list.ListItemView;
 import poisondog.android.view.list.SimpleItem;
@@ -46,7 +44,6 @@ public class MainActivity extends Activity {
 		LinearLayout root = (LinearLayout) findViewById(R.id.root);
 //		mRoot = new FileView(this);
 		mRoot = new EntityView(this);
-//		mRoot.setItemViewFactory(new MyItemViewFactory());
 		mRoot.setLayoutManager(new LinearLayoutManager(this));
 		mRoot.setRefreshHandler(new RefreshData());
 		String download = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + "/";
@@ -159,17 +156,5 @@ public class MainActivity extends Activity {
 			mRoot.setItems(result);
 		}
 	}
-
-//	class MyItemViewFactory implements Mission<Integer> {
-//		@Override
-//		public ItemView execute(Integer viewType) {
-//			ListItemView item = new ListItemView(MainActivity.this);
-//			item.setLayout(viewType);
-//			return item;
-////			if (viewType == ViewType.Header)
-////				return new HeaderItemView(MainActivity.this);
-////			return new GridItemView(MainActivity.this);
-//		}
-//	}
 
 }

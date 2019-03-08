@@ -17,6 +17,7 @@ package poisondog.android.view.list;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -26,7 +27,8 @@ import android.widget.TextView;
  * @author Adam Huang
  * @since 2017-12-28
  */
-public class ComplexItemView extends RelativeLayout implements ItemView {
+public class ListItemView extends RelativeLayout implements ItemView {
+	private View mRoot;
 	private ImageView mImage;
 	private ImageView mState;
 	private TextView mTitle;
@@ -39,22 +41,29 @@ public class ComplexItemView extends RelativeLayout implements ItemView {
 	/**
 	 * Constructor
 	 */
-	public ComplexItemView(Context context) {
+	public ListItemView(Context context) {
 		super(context);
+		init();
 	}
 
 	/**
 	 * Constructor
 	 */
-	public ComplexItemView(Context context, AttributeSet attribute) {
+	public ListItemView(Context context, AttributeSet attribute) {
 		super(context, attribute);
+		init();
 	}
 
 	/**
 	 * Constructor
 	 */
-	public ComplexItemView(Context context, AttributeSet attribute, int style) {
+	public ListItemView(Context context, AttributeSet attribute, int style) {
 		super(context, attribute, style);
+		init();
+	}
+
+	private void init() {
+		setLayout(R.layout.image_list_item);
 	}
 
 	@Override

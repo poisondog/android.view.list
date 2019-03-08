@@ -169,10 +169,20 @@ public class StickHeader extends RecyclerView.ItemDecoration {
 		}
 		@Override
 		public View execute(DataItem item) {
-			HeaderItemView result = new HeaderItemView(mContext);
+			ComplexItemView result = new ComplexItemView(mContext);
+			result.setLayout(R.layout.header_item);
 			result.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 			result.setItem(item);
 			result.getTitle().setText(item.getTitle());
+			if (item.getSubtitle() == null)
+				result.getSubtitle().setVisibility(View.GONE);
+			else
+				result.getSubtitle().setText(item.getSubtitle());
+
+			if (item.getComment() == null)
+				result.getComment().setVisibility(View.GONE);
+			else
+				result.getComment().setText(item.getComment());
 			return result;
 		}
 	}

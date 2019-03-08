@@ -4,4 +4,6 @@
 	<attr name="ListViewSubtitleStyle" format="reference"/>
 	<attr name="ListViewCommentStyle" format="reference"/>
 	<attr name="ListViewItemBackground" format="reference"/>
+	<attr name="GridViewBackground" format="reference"/>
+	<attr name="HeaderBackground" format="reference"/>
 </resources>
