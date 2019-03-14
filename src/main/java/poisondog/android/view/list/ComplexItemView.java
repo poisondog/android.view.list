@@ -17,6 +17,7 @@ package poisondog.android.view.list;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -60,6 +61,7 @@ public class ComplexItemView extends RelativeLayout implements ItemView {
 	@Override
 	public void setLayout(int resourceID) {
 		inflate(getContext(), resourceID, this);
+		setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 		mImage = (ImageView) findViewById(R.id.image);
 		mState = (ImageView) findViewById(R.id.state);
 		mHide = (TextView) findViewById(R.id.hide);
