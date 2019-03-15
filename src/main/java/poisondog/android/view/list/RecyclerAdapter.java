@@ -185,9 +185,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
 	class DefaultItemViewFactory implements Mission<Integer> {
 		@Override
-		public ItemView execute(Integer viewType) {
+		public ItemView execute(Integer layout) {
 			ComplexItemView item = new ComplexItemView(mContext);
-			item.setLayout(viewType);
+			item.setLayout(layout);
 			return item;
 		}
 	}
