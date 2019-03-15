@@ -122,7 +122,7 @@ public class MainActivity extends Activity {
 			String filename = URLUtils.file(f.getUrl());
 			String time = TimeFormatUtils.toString(f.getLastModifiedTime());
 			String size = SizeFormatUtils.toString(data.getSize());
-			SimpleItem item = SimpleItem.layout(filename, time, size, R.layout.image_grid_item);
+			SimpleItem item = SimpleItem.layout(filename, time, size, R.layout.grid_item);
 			item.setDefaultImage(R.drawable.file_txt);
 			item.setData(data);
 			item.setImage(data.getUrl());

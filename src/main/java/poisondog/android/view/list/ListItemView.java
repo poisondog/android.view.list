@@ -63,7 +63,7 @@ public class ListItemView extends RelativeLayout implements ItemView {
 	}
 
 	private void init() {
-		setLayout(R.layout.image_list_item);
+		setLayout(R.layout.list_item);
 	}
 
 	@Override

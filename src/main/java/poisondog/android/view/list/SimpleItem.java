@@ -45,7 +45,7 @@ public class SimpleItem implements DataItem {
 		mTitle = title;
 		mSubtitle = subtitle;
 		mComment = comment;
-		mLayout = R.layout.image_list_item;
+		mLayout = R.layout.list_item;
 	}
 
 	public static SimpleItem header(String title, String subtitle, String comment) {
