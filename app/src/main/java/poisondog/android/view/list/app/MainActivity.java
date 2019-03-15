@@ -18,7 +18,6 @@ import poisondog.android.view.list.DataItem;
 import poisondog.android.view.list.ItemView;
 import poisondog.android.view.list.ListItemView;
 import poisondog.android.view.list.SimpleItem;
-import poisondog.android.view.list.ViewType;
 import poisondog.core.Mission;
 import poisondog.format.SizeFormatUtils;
 import poisondog.format.TimeFormatUtils;
@@ -71,7 +70,7 @@ public class MainActivity extends Activity {
 					layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
 						@Override
 						public int getSpanSize(int position) {
-							if (mRoot.getItemViewType(position) == ViewType.Header)
+							if (mRoot.getItemViewLayout(position) == R.layout.header_item)
 								return 2;
 							return 1;
 						}

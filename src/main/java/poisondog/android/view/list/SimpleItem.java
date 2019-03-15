@@ -30,7 +30,6 @@ public class SimpleItem implements DataItem {
 	private int mResource;
 	private int mLayout;
 	private Object mData;
-	private ViewType mType = ViewType.Data;
 
 	/**
 	 * Constructor
@@ -51,7 +50,6 @@ public class SimpleItem implements DataItem {
 
 	public static SimpleItem header(String title, String subtitle, String comment) {
 		SimpleItem result = layout(title, subtitle, comment, R.layout.header_item);
-		result.setType(ViewType.Header);
 		return result;
 	}
 
@@ -86,9 +84,6 @@ public class SimpleItem implements DataItem {
 	public Object getData() {
 		return mData;
 	}
-	public ViewType getType() {
-		return mType;
-	}
 	public void setTitle(String title) {
 		mTitle = title;
 	}
@@ -109,9 +104,6 @@ public class SimpleItem implements DataItem {
 	}
 	public void setData(Object object) {
 		mData = object;
-	}
-	public void setType(ViewType type) {
-		mType = type;
 	}
 	public void setLayout(int layout) {
 		mLayout = layout;

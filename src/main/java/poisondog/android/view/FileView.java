@@ -26,7 +26,6 @@ import java.util.List;
 import poisondog.android.view.list.DataItem;
 import poisondog.android.view.list.R;
 import poisondog.android.view.list.SimpleItem;
-import poisondog.android.view.list.ViewType;
 import poisondog.core.Mission;
 import poisondog.net.URLUtils;
 import poisondog.util.Pair;
@@ -108,8 +107,8 @@ public class FileView extends RelativeLayout {
 		return mItemCreator;
 	}
 
-	public ViewType getItemViewType(int position) {
-		return mEntityView.getItemViewType(position);
+	public int getItemViewLayout(int position) {
+		return mEntityView.getItemViewLayout(position);
 	}
 
 //	// TODO 

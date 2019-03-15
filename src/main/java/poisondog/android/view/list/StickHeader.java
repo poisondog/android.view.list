@@ -155,7 +155,8 @@ public class StickHeader extends RecyclerView.ItemDecoration {
 	}
 
 	private boolean isHeader(int itemPosition) {
-		return mAdapter.getItem(itemPosition).getType() == ViewType.Header;
+		// TODO need to consider custom Header situation, current use default header layout
+		return mAdapter.getItem(itemPosition).getLayout() == R.layout.header_item;
 	}
 
 	public void setHeaderFactory(Mission<DataItem> factory) {

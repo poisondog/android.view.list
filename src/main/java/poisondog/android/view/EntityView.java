@@ -27,7 +27,6 @@ import poisondog.android.mission.ScrollTopRefresh;
 import poisondog.android.view.list.DataItem;
 import poisondog.android.view.list.RecyclerAdapter;
 import poisondog.android.view.list.StickHeader;
-import poisondog.android.view.list.ViewType;
 import poisondog.android.view.LoadingView;
 import poisondog.android.view.RefreshList;
 import poisondog.core.Mission;
@@ -155,8 +154,8 @@ public class EntityView extends RelativeLayout {
 		mRecyclerAdapter.setOnLongClickListener(listener);
 	}
 
-	public ViewType getItemViewType(int position) {
-		return mRecyclerAdapter.getItem(position).getType();
+	public int getItemViewLayout(int position) {
+		return mRecyclerAdapter.getItem(position).getLayout();
 	}
 
 }
