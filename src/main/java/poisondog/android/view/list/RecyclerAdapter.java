@@ -21,9 +21,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
-import poisondog.android.image.ImageFetcher;
 import poisondog.android.view.list.DataItem;
 import poisondog.core.Mission;
+import poisondog.util.Pair;
 
 /**
  * @author poisondog <poisondog@gmail.com>
@@ -31,10 +31,10 @@ import poisondog.core.Mission;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecycleViewHolder> {
 	private Context mContext;
 	private List<DataItem> mItems;
-	private ImageFetcher mFetcher;
 	private Mission<Integer> mItemViewFactor;
 	private View.OnClickListener mOnClickListener;
 	private View.OnLongClickListener mOnLongClickListener;
+	private Mission<Pair<View, DataItem>> mBinder;
 
 	/**
 	 * Constructor
@@ -44,12 +44,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 		mContext = context;
 		mItems = new ArrayList<DataItem>();
 		mItemViewFactor = new DefaultItemViewFactory();
-
-		try {
-			mFetcher = new ImageFetcher(mContext, 500, 500, mContext.getExternalCacheDir().getPath() + "/");
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
+		mBinder = new DefaultBinder(context);
 	}
 
 	/**
@@ -119,8 +114,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 	public RecycleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 		try {
 			View view = (View) mItemViewFactor.execute(viewType);
-			view.setOnClickListener(mOnClickListener);
-			view.setOnLongClickListener(mOnLongClickListener);
 			return new RecycleViewHolder(view);
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -130,36 +123,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
 	@Override
 	public void onBindViewHolder(RecycleViewHolder holder, int position) {
-		ItemView row = holder.getItemView();
+		View row = holder.getView();
 		DataItem obj = getItem(position);
-//		row.setLayout(obj.getLayout());
-		row.setItem(obj);
-		row.getTitle().setText(obj.getTitle());
-		if (obj.getSubtitle() == null)
-			row.getSubtitle().setVisibility(View.GONE);
-		else
-			row.getSubtitle().setText(obj.getSubtitle());
-
-		if (obj.getComment() == null)
-			row.getComment().setVisibility(View.GONE);
-		else
-			row.getComment().setText(obj.getComment());
-
-		if (obj.getImage() == null && obj.getDefaultImage() <= 0) {
-			row.getImage().setVisibility(View.GONE);
+		try {
+			mBinder.execute(new Pair<View, DataItem>(row, obj));
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
-		if (obj.getDefaultImage() > 0) {
-			mFetcher.setLoadingImage(obj.getDefaultImage());
-			row.getImage().setImageResource(obj.getDefaultImage());
-		}
-		if (obj.getImage() != null) {
-			mFetcher.loadImage(obj.getImage(), row.getImage());
-		}
-
-		if (obj.getState() == null)
-			row.getState().setVisibility(View.GONE);
-		else
-			mFetcher.loadImage(obj.getState(), row.getState());
 	}
 
 	@Override
@@ -168,26 +138,40 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 	}
 
 	class RecycleViewHolder extends RecyclerView.ViewHolder {
-		private ItemView mView;
+		private View mView;
 
 		/**
 		 * Constructor
 		 */
 		public RecycleViewHolder(View v) {
 			super(v);
-			mView = (ItemView) v;
+			mView = v;
+		}
+
+		public View getView() {
+			return mView;
 		}
 
 		public ItemView getItemView() {
-			return mView;
+			return (ItemView) mView;
 		}
 	}
 
 	class DefaultItemViewFactory implements Mission<Integer> {
+		private View.OnClickListener mOnClickListener;
+		private View.OnLongClickListener mOnLongClickListener;
+		public void setOnClickListener(View.OnClickListener listener) {
+			mOnClickListener = listener;
+		}
+		public void setOnLongClickListener(View.OnLongClickListener listener) {
+			mOnLongClickListener = listener;
+		}
 		@Override
 		public ItemView execute(Integer layout) {
 			ComplexItemView item = new ComplexItemView(mContext);
 			item.setLayout(layout);
+			item.setOnClickListener(mOnClickListener);
+			item.setOnLongClickListener(mOnLongClickListener);
 			return item;
 		}
 	}
