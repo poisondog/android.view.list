@@ -31,9 +31,9 @@ import poisondog.util.Pair;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecycleViewHolder> {
 	private Context mContext;
 	private List<DataItem> mItems;
-	private Mission<Integer> mItemViewFactor;
 	private View.OnClickListener mOnClickListener;
 	private View.OnLongClickListener mOnLongClickListener;
+	private Mission<Integer> mViewFactory;
 	private Mission<Pair<View, DataItem>> mBinder;
 
 	/**
@@ -43,7 +43,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 		super();
 		mContext = context;
 		mItems = new ArrayList<DataItem>();
-		mItemViewFactor = new DefaultItemViewFactory();
+		mViewFactory = new DefaultItemViewFactory();
 		mBinder = new DefaultBinder(context);
 	}
 
@@ -93,8 +93,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 		return mItems.get(position);
 	}
 
-	public void setItemViewFactory(Mission<Integer> factory) {
-		mItemViewFactor = factory;
+	/**
+	 * set factory for Mission with layout input View output
+	 */
+	public void setViewFactory(Mission<Integer> factory) {
+		mViewFactory = factory;
 	}
 
 	public void setOnClickListener(View.OnClickListener listener) {
@@ -113,7 +116,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 	@Override
 	public RecycleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 		try {
-			View view = (View) mItemViewFactor.execute(viewType);
+			View view = (View) mViewFactory.execute(viewType);
 			return new RecycleViewHolder(view);
 		} catch(Exception e) {
 			e.printStackTrace();

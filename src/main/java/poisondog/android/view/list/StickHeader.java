@@ -163,6 +163,10 @@ public class StickHeader extends RecyclerView.ItemDecoration {
 		mHeaderFactory = factory;
 	}
 
+	public void setAdapter(RecyclerAdapter adapter) {
+		mAdapter = adapter;
+	}
+
 	class DefaultHeaderFactory implements Mission<DataItem> {
 		private Context mContext;
 		public DefaultHeaderFactory(Context context) {

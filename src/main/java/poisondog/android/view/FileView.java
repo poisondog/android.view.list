@@ -79,8 +79,8 @@ public class FileView extends RelativeLayout {
 		mEntityView.setLayoutManager(manager);
 	}
 
-	public void setItemViewFactory(Mission<Integer> factory) {
-		mEntityView.setItemViewFactory(factory);
+	public void setViewFactory(Mission<Integer> factory) {
+		mEntityView.setViewFactory(factory);
 	}
 
 	public void setLoading(boolean flag) {

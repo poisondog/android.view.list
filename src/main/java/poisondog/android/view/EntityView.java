@@ -89,8 +89,8 @@ public class EntityView extends RelativeLayout {
 		mRecyclerView.setLayoutManager(manager);
 	}
 
-	public void setItemViewFactory(Mission<Integer> factory) {
-		mRecyclerAdapter.setItemViewFactory(factory);
+	public void setViewFactory(Mission<Integer> factory) {
+		mRecyclerAdapter.setViewFactory(factory);
 	}
 
 	public void setHeaderFactory(Mission<DataItem> factory) {
@@ -135,6 +135,12 @@ public class EntityView extends RelativeLayout {
 
 	public void notifyDataSetChanged() {
 		mRecyclerAdapter.notifyDataSetChanged();
+	}
+
+	public void setAdapter(RecyclerAdapter adapter) {
+		mRecyclerAdapter = adapter;
+		mStickHeader.setAdapter(mRecyclerAdapter);
+		mRecyclerView.setAdapter(mRecyclerAdapter);
 	}
 
 	public void setItem(int index, DataItem item) {
