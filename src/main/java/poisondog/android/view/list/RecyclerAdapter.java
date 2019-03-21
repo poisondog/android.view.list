@@ -108,6 +108,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 		mOnLongClickListener = listener;
 	}
 
+	public View.OnClickListener getOnClickListener() {
+		return mOnClickListener;
+	}
+
+	public View.OnLongClickListener getOnLongClickListener() {
+		return mOnLongClickListener;
+	}
+
 	@Override
 	public int getItemViewType(int position) {
 		return getItem(position).getLayout();
@@ -161,14 +169,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 	}
 
 	class DefaultItemViewFactory implements Mission<Integer> {
-		private View.OnClickListener mOnClickListener;
-		private View.OnLongClickListener mOnLongClickListener;
-		public void setOnClickListener(View.OnClickListener listener) {
-			mOnClickListener = listener;
-		}
-		public void setOnLongClickListener(View.OnLongClickListener listener) {
-			mOnLongClickListener = listener;
-		}
 		@Override
 		public ItemView execute(Integer layout) {
 			ComplexItemView item = new ComplexItemView(mContext);
