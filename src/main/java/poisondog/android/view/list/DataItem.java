@@ -29,4 +29,5 @@ public interface DataItem {
 	public int getDefaultImage();
 	public int getLayout();
 	public void setData(Object object);
+	public void setLayout(int layout);
 }

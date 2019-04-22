@@ -42,6 +42,7 @@ public class EntityView extends RelativeLayout {
 	private LoadingView mLoading;
 	private EmptyView mEmpty;
 	private StickHeader mStickHeader;
+	private List<DataItem> mItems;
 
 	/**
 	 * Constructor
@@ -144,12 +145,18 @@ public class EntityView extends RelativeLayout {
 	}
 
 	public void setItem(int index, DataItem item) {
+		mItems.set(index, item);
 		mRecyclerAdapter.setItem(index, item);
 	}
 
 	public void setItems(List<DataItem> items) {
+		mItems = items;
 		mRecyclerAdapter.setItems(items);
 		setLoading(false);
+	}
+
+	public List<DataItem> getItems() {
+		return mItems;
 	}
 
 	public void setOnClickListener(View.OnClickListener listener) {

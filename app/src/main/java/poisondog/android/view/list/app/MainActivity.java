@@ -77,18 +77,24 @@ public class MainActivity extends Activity {
 					});
 					mRoot.setLayoutManager(layoutManager);
 
-					GridCreator mCreator = new GridCreator();
-					ArrayList<DataItem> result = new ArrayList<DataItem>();
-					result.add(SimpleItem.header("Head", "second", "third"));
-					for (IFile f : mContent) {
-						try {
-							result.add(mCreator.execute(f));
-						} catch(Exception e) {
+//					GridCreator mCreator = new GridCreator();
+//					ArrayList<DataItem> result = new ArrayList<DataItem>();
+//					result.add(SimpleItem.header("Head", "second", "third"));
+//					for (IFile f : mContent) {
+//						try {
+//							result.add(mCreator.execute(f));
+//						} catch(Exception e) {
+//						}
+//						if (Math.random() < 0.1)
+//							result.add(SimpleItem.header("first", "second", "third"));
+//					}
+//					mRoot.setItems(result);
+
+					for (DataItem item : mRoot.getItems()) {
+						if (item.getLayout() == R.layout.list_item) {
+							item.setLayout(R.layout.grid_item);
 						}
-						if (Math.random() < 0.1)
-							result.add(SimpleItem.header("first", "second", "third"));
 					}
-					mRoot.setItems(result);
 
 					return true;
 				}
