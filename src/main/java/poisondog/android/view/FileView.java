@@ -153,6 +153,10 @@ public class FileView extends RelativeLayout {
 		return mContent;
 	}
 
+	public List<DataItem> getItems() {
+		return mEntityView.getItems();
+	}
+
 //	// TODO 
 //	public void setPosition(Pair<Integer, Integer> position) {
 //		mListView.setSelectionFromTop(position.getValue1(), position.getValue2());
