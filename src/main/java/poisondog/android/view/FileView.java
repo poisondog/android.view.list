@@ -116,13 +116,6 @@ public class FileView extends RelativeLayout {
 //		mAdapter.setItem(position, createItem(file));
 //	}
 
-	public void setFile(int position, IFile file) {
-		try {
-			mEntityView.setItem(position, (DataItem) getItemCreator().execute(file));
-		} catch(Exception e) {
-		}
-	}
-
 	public void remove(int index) {
 		mEntityView.remove(index);
 	}
@@ -147,6 +140,13 @@ public class FileView extends RelativeLayout {
 		mContent = datas;
 		mEntityView.clear();
 		mEntityView.refresh();
+	}
+
+	public void setFile(int position, IFile file) {
+		try {
+			mEntityView.setItem(position, (DataItem) getItemCreator().execute(file));
+		} catch(Exception e) {
+		}
 	}
 
 	public List<IFile> getContent() {
