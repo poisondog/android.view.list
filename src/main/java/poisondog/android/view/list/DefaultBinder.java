@@ -55,8 +55,10 @@ public class DefaultBinder implements Mission<Pair<View, DataItem>> {
 
 		if (obj.getComment() == null)
 			row.getComment().setVisibility(View.GONE);
-		else
+		else {
+			row.getComment().setVisibility(View.VISIBLE);
 			row.getComment().setText(obj.getComment());
+		}
 
 		if (obj.getImage() == null && obj.getDefaultImage() <= 0) {
 			row.getImage().setVisibility(View.GONE);
