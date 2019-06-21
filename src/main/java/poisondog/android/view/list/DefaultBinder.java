@@ -53,10 +53,11 @@ public class DefaultBinder implements Mission<Pair<View, DataItem>> {
 		else
 			row.getSubtitle().setText(obj.getSubtitle());
 
-		if (obj.getComment() == null)
-			row.getComment().setVisibility(View.GONE);
-		else {
-			row.getComment().setVisibility(View.VISIBLE);
+		if (obj.getComment() == null) {
+			row.getComment().setText("");
+//			row.getComment().setVisibility(View.GONE);
+		} else {
+//			row.getComment().setVisibility(View.VISIBLE);
 			row.getComment().setText(obj.getComment());
 		}
 
