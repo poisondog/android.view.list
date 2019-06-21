@@ -41,6 +41,7 @@ public class EntityView extends RelativeLayout {
 	private RecyclerAdapter mRecyclerAdapter;
 	private LoadingView mLoading;
 	private EmptyView mEmpty;
+	private EmptyView mError;
 	private StickHeader mStickHeader;
 	private List<DataItem> mItems;
 
@@ -64,6 +65,7 @@ public class EntityView extends RelativeLayout {
 		mRefresh = new RefreshList(context);
 		mLoading = new LoadingView(context);
 		mEmpty = new EmptyView(context);
+		mError = new EmptyView(context);
 
 		mRecyclerAdapter = new RecyclerAdapter(context);
 		mRecyclerView = new RecyclerView(context);
@@ -74,11 +76,12 @@ public class EntityView extends RelativeLayout {
 		mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
 		mRecyclerView.addItemDecoration(mStickHeader);
 
-		mRefresh.addView(mRecyclerView);
+		mEmpty.setContent(mRecyclerView);
+		mError.setContent(mEmpty);
+		mLoading.setContent(mError);
 
-		mEmpty.setContent(mRefresh);
-		mLoading.setContent(mEmpty);
-		addView(mLoading);
+		mRefresh.addView(mLoading);
+		addView(mRefresh);
 		setLoading(false);
 	}
 
@@ -114,12 +117,20 @@ public class EntityView extends RelativeLayout {
 		mEmpty.setEmpty(flag);
 	}
 
+	public void setError(boolean flag) {
+		mError.setEmpty(flag);
+	}
+
 	public void setProgressBar(View view) {
 		mLoading.setProgressBar(view);
 	}
 
 	public void setEmpty(View view) {
 		mEmpty.setEmpty(view);
+	}
+
+	public void setError(View view) {
+		mError.setEmpty(view);
 	}
 
 	public void remove(int index) {
