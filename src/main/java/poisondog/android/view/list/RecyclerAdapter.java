@@ -100,6 +100,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 		mViewFactory = factory;
 	}
 
+	public void setBinder(Mission<Pair<View, DataItem>> binder) {
+		mBinder = binder;
+	}
+
 	public void setOnClickListener(View.OnClickListener listener) {
 		mOnClickListener = listener;
 	}

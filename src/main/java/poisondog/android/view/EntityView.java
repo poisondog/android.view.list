@@ -30,6 +30,7 @@ import poisondog.android.view.list.StickHeader;
 import poisondog.android.view.LoadingView;
 import poisondog.android.view.RefreshList;
 import poisondog.core.Mission;
+import poisondog.util.Pair;
 
 /**
  * @author Adam Huang
@@ -88,6 +89,10 @@ public class EntityView extends RelativeLayout {
 
 	public void setLayoutManager(RecyclerView.LayoutManager manager) {
 		mRecyclerView.setLayoutManager(manager);
+	}
+
+	public void setBinder(Mission<Pair<View, DataItem>> binder) {
+		mRecyclerAdapter.setBinder(binder);
 	}
 
 	public void setViewFactory(Mission<Integer> factory) {
