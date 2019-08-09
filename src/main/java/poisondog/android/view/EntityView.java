@@ -143,6 +143,10 @@ public class EntityView extends RelativeLayout {
 		mRecyclerAdapter.notifyDataSetChanged();
 	}
 
+	public void notifyItemChanged(int position) {
+		mRecyclerAdapter.notifyItemChanged(position);
+	}
+
 	public void setAdapter(RecyclerAdapter adapter) {
 		mRecyclerAdapter = adapter;
 		mStickHeader.setAdapter(mRecyclerAdapter);
