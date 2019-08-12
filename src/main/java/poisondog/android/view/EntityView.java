@@ -168,6 +168,10 @@ public class EntityView extends RelativeLayout {
 		return mItems;
 	}
 
+	public RecyclerView getRecyclerView() {
+		return mRecyclerView;
+	}
+
 	public void setOnClickListener(View.OnClickListener listener) {
 		mRecyclerAdapter.setOnClickListener(listener);
 	}
