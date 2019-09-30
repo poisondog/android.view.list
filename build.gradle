@@ -1,10 +1,11 @@
 buildscript {
 	repositories {
+		google()
 		jcenter()
 	}
 
 	dependencies {
-		classpath 'com.android.tools.build:gradle:2.2.1'
+		classpath 'com.android.tools.build:gradle:3.3.0'
 		classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
 		classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
 	}
@@ -13,6 +14,7 @@ buildscript {
 apply plugin: 'com.android.library'
 
 repositories {
+	google()
 	jcenter()
 	maven {
 		url "https://dl.bintray.com/poisondog/poisondog/"
@@ -23,8 +25,8 @@ project.group = 'poisondog'
 project.version = '5.3.0'
 
 android {
-	compileSdkVersion 24
-	buildToolsVersion "25.0.2"
+	compileSdkVersion 28
+	buildToolsVersion '28.0.3'
 
 	defaultConfig {
 		minSdkVersion 14
@@ -38,11 +40,17 @@ android {
 }
 
 dependencies {
-	compile 'com.android.support:recyclerview-v7:24.2.0'
-	compile 'com.android.support:design:24.2.0'
-	compile 'poisondog:poisondog.android.image:1.0.3@aar'
-	compile 'poisondog:poisondog.commons:3.6.5'
-	compile 'poisondog:poisondog.android.util:2.0.0@aar'
+	compile 'com.android.support:recyclerview-v7:25.+'
+	compile 'com.android.support:design:25.+'
+	compile ('poisondog:poisondog.android.image:1.0.3@aar') {
+		exclude module: 'commons-logging'
+	}
+	compile ('poisondog:poisondog.commons:3.6.5') {
+		exclude module: 'commons-logging'
+	}
+	compile ('poisondog:poisondog.android.util:2.0.0@aar'){
+		exclude module: 'commons-logging'
+	}
 }
 
 apply from: 'https://raw.githubusercontent.com/poisondog/gradle.tool/master/android/bintray.gradle'

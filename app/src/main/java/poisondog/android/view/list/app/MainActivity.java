@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.view.View;
 import android.widget.LinearLayout;
 import java.util.ArrayList;
@@ -16,7 +18,6 @@ import poisondog.android.view.FileView;
 import poisondog.android.view.list.app.R;
 import poisondog.android.view.list.DataItem;
 import poisondog.android.view.list.ItemView;
-import poisondog.android.view.list.ListItemView;
 import poisondog.android.view.list.SimpleItem;
 import poisondog.core.Mission;
 import poisondog.format.SizeFormatUtils;
@@ -40,9 +41,13 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
+		int resId = R.anim.layout_animation_right_to_left;
+		LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(this, resId);
+
 		LinearLayout root = (LinearLayout) findViewById(R.id.root);
 //		mRoot = new FileView(this);
 		mRoot = new EntityView(this);
+		mRoot.getRecyclerView().setLayoutAnimation(animation);
 		mRoot.setLayoutManager(new LinearLayoutManager(this));
 		mRoot.setRefreshHandler(new RefreshData());
 		String download = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath() + "/";

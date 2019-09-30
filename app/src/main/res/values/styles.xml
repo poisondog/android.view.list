@@ -1,9 +1,15 @@
 <resources>
-	<style name="CoolTheme" parent="style/Theme.AppCompat.Light.NoActionBar">
+	<style name="CoolTheme">
 		<item name="HeaderBackground">@style/YellowBackground</item>
+		<item name="HeaderTitle">@style/RedTitle</item>
+		<item name="HeaderSubtitle">@style/RedTitle</item>
 	</style>
 
 	<style name="YellowBackground">
 		<item name="android:background">@color/yellow</item>
+	</style>
+
+	<style name="RedTitle">
+		<item name="android:textColor">@color/blue</item>
 	</style>
 </resources>
