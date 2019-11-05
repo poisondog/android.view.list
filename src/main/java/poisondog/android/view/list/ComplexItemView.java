@@ -114,4 +114,15 @@ public class ComplexItemView extends RelativeLayout implements ItemView {
 	public DataItem getItem() {
 		return mItem;
 	}
+
+	@Override
+	public void setAlpha(float alpha) {
+		super.setAlpha(alpha);
+		mImage.setAlpha((int)alpha);
+		mState.setAlpha((int)alpha);
+		mTitle.setTextColor(mTitle.getTextColors().withAlpha((int)alpha));
+		mSubtitle.setTextColor(mSubtitle.getTextColors().withAlpha((int)alpha));
+		mComment.setTextColor(mComment.getTextColors().withAlpha((int)alpha));
+	}
+
 }
