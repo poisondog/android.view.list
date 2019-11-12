@@ -1,6 +1,21 @@
 project.group = 'poisondog'
 project.version = '1.0.0'
-apply from: 'mvn.gradle'
+
+allprojects {
+	repositories {
+		google()
+		jcenter()
+		maven {
+			url "https://dl.bintray.com/poisondog/poisondog/"
+		}
+		maven {
+			url "https://jitpack.io"
+		}
+		maven {
+			url "http://nexus.walton.poisondog.com/repository/maven-public/"
+		}
+	}
+}
 
 buildscript {
 	repositories {
