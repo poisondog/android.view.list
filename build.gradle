@@ -22,7 +22,7 @@ repositories {
 }
 
 project.group = 'poisondog'
-project.version = '5.3.1'
+project.version = '5.3.2'
 
 android {
 	compileSdkVersion 28
@@ -48,7 +48,7 @@ dependencies {
 	compile ('poisondog:poisondog.commons:3.6.5') {
 		exclude module: 'commons-logging'
 	}
-	compile ('poisondog:poisondog.android.util:2.0.0@aar'){
+	compile ('poisondog:poisondog.android.util:2.7.1@aar'){
 		exclude module: 'commons-logging'
 	}
 }
