@@ -54,3 +54,4 @@ dependencies {
 }
 
 apply from: 'https://raw.githubusercontent.com/poisondog/gradle.tool/master/android/bintray.gradle'
+apply from: 'https://raw.githubusercontent.com/poisondog/gradle.tool/master/android/uploadNexus.gradle'
