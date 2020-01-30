@@ -19,10 +19,14 @@ repositories {
 	maven {
 		url "https://dl.bintray.com/poisondog/poisondog/"
 	}
+	maven {
+		url "http://nexus.walton.poisondog.com/repository/maven-public/"
+	}
 }
 
-project.group = 'poisondog'
-project.version = '5.3.2'
+//project.group = 'poisondog'
+project.group = 'com.walton.cob'
+project.version = '5.3.3'
 
 android {
 	compileSdkVersion 28
@@ -42,15 +46,9 @@ android {
 dependencies {
 	compile 'com.android.support:recyclerview-v7:25.+'
 	compile 'com.android.support:design:25.+'
-	compile ('poisondog:poisondog.android.image:1.0.3@aar') {
-		exclude module: 'commons-logging'
-	}
-	compile ('poisondog:poisondog.commons:3.6.5') {
-		exclude module: 'commons-logging'
-	}
-	compile ('poisondog:poisondog.android.util:2.7.1@aar'){
-		exclude module: 'commons-logging'
-	}
+	compile 'com.walton.cob:android.image:1.2.16@aar'
+	compile 'com.walton.cob:android.util:2.9.1@aar'
+	compile 'com.walton.cob:poisondog.commons:8.3.2'
 }
 
 apply from: 'https://raw.githubusercontent.com/poisondog/gradle.tool/master/android/bintray.gradle'
