@@ -27,7 +27,7 @@ import poisondog.android.view.list.DataItem;
 import poisondog.android.view.list.R;
 import poisondog.android.view.list.SimpleItem;
 import poisondog.core.Mission;
-import poisondog.net.URLUtils;
+import poisondog.net.UrlUtils;
 import poisondog.util.Pair;
 import poisondog.util.TimeUtils;
 import poisondog.vfs.comparator.NameOrder;
@@ -184,7 +184,7 @@ public class FileView extends RelativeLayout {
 			String filename = "Unknown";
 			String time = "";
 			try {
-				filename = URLUtils.file(f.getUrl());
+				filename = UrlUtils.filename(f.getUrl());
 				time = TimeUtils.toString(f.getLastModifiedTime());
 			} catch(Exception e) {
 			}

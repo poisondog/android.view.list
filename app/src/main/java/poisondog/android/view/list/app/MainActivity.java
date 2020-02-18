@@ -20,7 +20,7 @@ import poisondog.android.view.list.SimpleItem;
 import poisondog.core.Mission;
 import poisondog.format.SizeFormatUtils;
 import poisondog.format.TimeFormatUtils;
-import poisondog.net.URLUtils;
+import poisondog.net.UrlUtils;
 import poisondog.vfs.comparator.NameOrder;
 import poisondog.vfs.FileFactory;
 import poisondog.vfs.filter.FileFilter;
@@ -51,7 +51,7 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				ItemView target = (ItemView) v;
 				try {
-					System.out.println(URLUtils.file(((IData)target.getItem().getData()).getUrl()));
+					System.out.println(UrlUtils.filename(((IData)target.getItem().getData()).getUrl()));
 				} catch(Exception e) {
 				}
 			}
@@ -87,7 +87,7 @@ public class MainActivity extends Activity {
 		@Override
 		public DataItem execute(IFile f) throws Exception {
 			IData data = (IData)f;
-			String filename = URLUtils.file(f.getUrl());
+			String filename = UrlUtils.filename(f.getUrl());
 			String time = TimeFormatUtils.toString(f.getLastModifiedTime());
 			String size = SizeFormatUtils.toString(data.getSize());
 			SimpleItem item = new SimpleItem(filename, time, size);

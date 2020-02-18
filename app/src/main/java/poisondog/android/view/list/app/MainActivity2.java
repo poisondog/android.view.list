@@ -14,15 +14,13 @@ import poisondog.android.view.list.SimpleItem;
 import poisondog.core.Mission;
 import poisondog.format.SizeFormatUtils;
 import poisondog.format.TimeFormatUtils;
-import poisondog.net.URLUtils;
+import poisondog.net.UrlUtils;
 import poisondog.vfs.FileFactory;
 import poisondog.vfs.filter.FileFilter;
 import poisondog.vfs.filter.OnlyImage;
 import poisondog.vfs.IData;
 import poisondog.vfs.IFile;
 import poisondog.vfs.IFolder;
-import java.util.Collections;
-import poisondog.vfs.comparator.NameOrder;
 
 
 public class MainActivity2 extends Activity {
@@ -54,7 +52,7 @@ public class MainActivity2 extends Activity {
 		@Override
 		public DataItem execute(IFile f) throws Exception {
 			IData data = (IData)f;
-			String filename = URLUtils.file(f.getUrl());
+			String filename = UrlUtils.filename(f.getUrl());
 			String time = TimeFormatUtils.toString(f.getLastModifiedTime());
 			String size = SizeFormatUtils.toString(data.getSize());
 			SimpleItem item = new SimpleItem(filename, time, size);

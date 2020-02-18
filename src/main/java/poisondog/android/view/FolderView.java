@@ -19,7 +19,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import poisondog.core.Mission;
 import poisondog.core.NoMission;
-import poisondog.net.URLUtils;
+import poisondog.net.UrlUtils;
 import poisondog.string.GetPath;
 import poisondog.vfs.FileFactory;
 import poisondog.vfs.IFolder;
@@ -69,7 +69,7 @@ public class FolderView extends FileView {
 	public void parent() throws Exception {
 		if (isRoot())
 			return;
-		setFolder((IFolder) FileFactory.getFile(URLUtils.parentUrl(mCurrent.getUrl())));
+		setFolder((IFolder) FileFactory.getFile(UrlUtils.parentUrl(mCurrent.getUrl())));
 	}
 
 	public boolean isRoot() throws Exception {

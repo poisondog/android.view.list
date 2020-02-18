@@ -19,13 +19,9 @@ repositories {
 	maven {
 		url "https://dl.bintray.com/poisondog/poisondog/"
 	}
-	maven {
-		url "http://nexus.walton.poisondog.com/repository/maven-public/"
-	}
 }
 
-//project.group = 'poisondog'
-project.group = 'com.walton.cob'
+project.group = 'poisondog'
 project.version = '5.3.3'
 
 android {
@@ -46,9 +42,9 @@ android {
 dependencies {
 	implementation 'com.android.support:recyclerview-v7:25.+'
 	implementation 'com.android.support:design:25.+'
-	implementation 'com.walton.cob:android.image:1.2.16@aar'
-	implementation 'com.walton.cob:android.util:2.9.1@aar'
-	implementation 'com.walton.cob:poisondog.commons:8.3.2'
+	implementation 'poisondog:android.image:2.0.0@aar'
+	implementation 'poisondog:android.util:3.2.0'
+	implementation 'poisondog:poisondog.commons:9.0.0'
 }
 
 apply from: 'https://raw.githubusercontent.com/poisondog/gradle.tool/master/android/bintray.gradle'

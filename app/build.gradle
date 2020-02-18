@@ -11,9 +11,6 @@ allprojects {
 		maven {
 			url "https://jitpack.io"
 		}
-		maven {
-			url "http://nexus.walton.poisondog.com/repository/maven-public/"
-		}
 	}
 }
 
@@ -51,10 +48,13 @@ android {
 
 dependencies {
 	compile project(':library')
+	implementation 'poisondog:poisondog.commons:9.0.0'
+	implementation 'com.android.support:recyclerview-v7:25.+'
 }
 
 configurations {
 	compile.exclude module: 'xml-apis'
+	compile.exclude module: 'commons-logging'
 }
 
 //apply from: 'signing.gradle'
