@@ -38,7 +38,7 @@
 		<TextView
 			android:id="@+id/title"
 			style="?attr/ListTitle"
-			android:layout_width="wrap_content"
+			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_toRightOf="@id/image"
 			>
@@ -49,6 +49,7 @@
 			android:layout_height="wrap_content"
 			android:layout_below="@id/title"
 			android:layout_alignLeft="@id/title"
+			android:layout_toLeftOf="@+id/comment"
 			>
 			<ProgressBar
 				android:id="@+id/progress"
@@ -61,19 +62,18 @@
 			<TextView
 				android:id="@+id/subtitle"
 				style="?attr/ListSubtitle"
-				android:layout_width="match_parent"
+				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				>
 			</TextView>
 		</FrameLayout>
 		<TextView
-			android:id="@+id/comment"
+			android:id="@id/comment"
 			style="?attr/ListComment"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
+			android:layout_alignRight="@id/title"
 			android:layout_below="@id/title"
-			android:layout_toRightOf="@id/subtitle"
-			android:layout_alignParentRight="true"
 			>
 		</TextView>
 	</RelativeLayout>
