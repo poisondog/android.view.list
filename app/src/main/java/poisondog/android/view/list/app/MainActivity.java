@@ -1,12 +1,14 @@
 package poisondog.android.view.list.app;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
+import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import poisondog.android.view.EntityContent;
 import poisondog.android.view.list.app.R;
@@ -21,38 +23,26 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
-		int resId = R.anim.layout_animation_right_to_left;
-		LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(this, resId);
-
-		LinearLayout root = (LinearLayout) findViewById(R.id.root);
-		mRoot = new EntityContent(this);
-		mRoot.getRecyclerView().setLayoutAnimation(animation);
-		mRoot.setLayoutManager(new LinearLayoutManager(this));
-//		mRoot.setRefreshHandler(new RefreshData());
-
-//		mRoot.setOnClickListener(new LayoutToGrid(mRoot));
-		mRoot.setOnClickListener(new PrintUrl());
-//		mRoot.setOnLongClickListener(new LayoutToGrid(mRoot));
-
-		ItemTouchBuilder builder = new ItemTouchBuilder();
-		builder.setMoveHandler(new UpdateSort(mRoot.getRecyclerAdapter()));
-		builder.setRightHandler(new RemoveItem(mRoot.getRecyclerAdapter()));
-		builder.setLeftHandler(new Mission<RecyclerView.ViewHolder>() {
+		Button refresh = (Button) findViewById(R.id.refreshDemo);
+		refresh.setOnClickListener(new View.OnClickListener() {
 			@Override
-			public Void execute(RecyclerView.ViewHolder holder) {
-				System.out.println("swiped");
-				return null;
+			public void onClick(View v) {
+				Intent intent = new Intent();
+				intent.setClass(MainActivity.this, RefreshDemo.class);
+				startActivity(intent);
 			}
 		});
-		builder.execute(mRoot.getRecyclerView());
 
-		RefreshData refresher = new RefreshData(mRoot);
-		refresher.run();
-//		Thread t = new Thread(refresher);
-//		t.start();
+		Button itemTouch = (Button) findViewById(R.id.itemTouch);
+		itemTouch.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent();
+				intent.setClass(MainActivity.this, ItemTouchDemo.class);
+				startActivity(intent);
+			}
+		});
 
-//		mRoot.refresh();
-		root.addView(mRoot);
 	}
 
 }

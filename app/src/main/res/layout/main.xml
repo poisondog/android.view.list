@@ -6,5 +6,17 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	>
+	<Button
+		android:id="@+id/refreshDemo"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="Refresh Demo"
+		/>
+	<Button
+		android:id="@+id/itemTouch"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="ItemTouch Demo"
+		/>
 </LinearLayout>
 
