@@ -13,6 +13,8 @@ import android.widget.LinearLayout;
 import poisondog.android.view.EntityContent;
 import poisondog.android.view.list.app.R;
 import poisondog.android.view.list.ItemTouchBuilder;
+import poisondog.android.permission.Permission;
+import poisondog.android.permission.RequestPermissions;
 import poisondog.core.Mission;
 
 public class MainActivity extends Activity {
@@ -43,6 +45,8 @@ public class MainActivity extends Activity {
 			}
 		});
 
+		RequestPermissions requester = new RequestPermissions();
+		requester.execute(new RequestPermissions.Parameter(this, 0, Permission.STORAGE));
 	}
 
 }

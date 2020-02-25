@@ -31,8 +31,8 @@ android {
 	defaultConfig {
 		versionCode 4
 		versionName project.version
-		minSdkVersion 14
-		targetSdkVersion 17
+		minSdkVersion 24
+		targetSdkVersion 24
 		multiDexEnabled true
 	}
 
@@ -54,6 +54,7 @@ dependencies {
 	compile project(':library')
 	implementation 'poisondog:poisondog.commons:9.0.0'
 	implementation 'com.android.support:recyclerview-v7:25.+'
+	implementation 'poisondog:android.util:3.3.0'
 }
 
 configurations {
