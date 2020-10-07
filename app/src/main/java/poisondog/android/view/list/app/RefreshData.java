@@ -22,20 +22,20 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import poisondog.android.view.EntityContent;
-import poisondog.android.view.list.app.R;
 import poisondog.android.view.list.DataItem;
 import poisondog.android.view.list.SimpleItem;
+import poisondog.android.view.list.app.R;
 import poisondog.core.Mission;
 import poisondog.format.SizeFormatUtils;
 import poisondog.format.TimeFormatUtils;
 import poisondog.net.UrlUtils;
-import poisondog.vfs.comparator.NameOrder;
 import poisondog.vfs.FileFactory;
-import poisondog.vfs.filter.FileFilter;
-import poisondog.vfs.filter.OnlyImage;
 import poisondog.vfs.IData;
 import poisondog.vfs.IFile;
 import poisondog.vfs.IFolder;
+import poisondog.vfs.comparator.NameOrder;
+import poisondog.vfs.filter.FileFilter;
+import poisondog.vfs.filter.OnlyImage;
 
 /**
  * @author Adam Huang
